@@ -9,6 +9,9 @@ import javafx.scene.control.TextArea;
 
 public class Object195Controller {
     @FXML
+    private Tab FriendManager;
+
+    @FXML
     private Button MASTAB;
 
     @FXML

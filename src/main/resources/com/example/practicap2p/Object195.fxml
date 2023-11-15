@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +11,15 @@
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <Text layoutX="282.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WIP" />
-      <TabPane fx:id="TABPANE" prefHeight="378.0" prefWidth="534.0" tabClosingPolicy="UNAVAILABLE" />
+      <TabPane fx:id="TABPANE" prefHeight="378.0" prefWidth="534.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab fx:id="FriendManager" text="Friends">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
       <Button fx:id="MASTAB" layoutX="535.0" layoutY="2.0" mnemonicParsing="false" onAction="#addTab" text="+" />
       <Button fx:id="MENOSTAB" layoutX="562.0" layoutY="2.0" mnemonicParsing="false" onAction="#removeTab" text="-" />
    </children>
