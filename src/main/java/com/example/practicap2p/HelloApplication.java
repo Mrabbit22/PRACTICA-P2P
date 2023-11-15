@@ -24,7 +24,8 @@ public class HelloApplication extends Application {
         this.stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
         Scene Escena = new Scene(fxmlLoader.load(), 960, 540);
-        this.stg.setTitle("MAMAHUEVARDO");
+        this.stg.setTitle("Titulo");
+
         this.stg.setScene(Escena);
         this.stg.show();
         //Parent panel = FXMLLoader.load(getClass().getResource(archivo));
