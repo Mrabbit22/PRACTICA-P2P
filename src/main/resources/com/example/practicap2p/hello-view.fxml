@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" prefHeight="290.0" prefWidth="339.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.practicap2p.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <Label fx:id="welcomeText" />
+   <SplitPane dividerPositions="0.29797979797979796" prefHeight="191.0" prefWidth="218.0">
+     <items>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="113.0">
+            <children>
+               <Text fx:id="USER" layoutX="22.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER" />
+               <Text fx:id="PASSWORD" layoutX="9.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PASSWORD" wrappingWidth="67.2000328063964" />
+            </children>
+         </AnchorPane>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="152.0" prefWidth="129.0">
+            <children>
+                <Button fx:id="ButtonLogIn" layoutX="28.0" layoutY="149.0" onAction="#onHelloButtonClick" prefHeight="26.0" prefWidth="150.0" text="LOGIN" />
+               <TextField fx:id="FieldUser" layoutX="29.0" layoutY="27.0" promptText="User" />
+               <PasswordField fx:id="FieldPassword" layoutX="30.0" layoutY="82.0" promptText="Passwrod" />
+            </children>
+         </AnchorPane>
+     </items>
+   </SplitPane>
+</VBox>
