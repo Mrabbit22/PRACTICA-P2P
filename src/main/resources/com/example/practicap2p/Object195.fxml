@@ -13,7 +13,7 @@
       <Text layoutX="282.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WIP" />
       <TabPane fx:id="TABPANE" prefHeight="378.0" prefWidth="534.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab text="Untitled Tab">
+            <Tab fx:id="TabPrueba" text="Untitled Tab">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="542.0" />
               </content>
