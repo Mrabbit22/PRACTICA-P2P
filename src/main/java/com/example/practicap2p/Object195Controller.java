@@ -5,9 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 
 public class Object195Controller {
-
     @FXML
     private Button MASTAB;
 
@@ -18,15 +18,33 @@ public class Object195Controller {
     private TabPane TABPANE;
 
     @FXML
+    private TextArea TEXTOMOSTRARCOSAS;
+    /*
+    public void initialize(){
+        Tab aux = new Tab();
+        aux.setText("Amigos");
+        this.TABPANE.getTabs().add(aux);
+    }
+    */
+    @FXML
     void addTab(ActionEvent event) {
         Tab aux = new Tab();
         aux.setText("Conexión");
+        TextArea auxi = new TextArea();
+        auxi.setLayoutX(14);
+        auxi.setLayoutY(14);
+        auxi.setMaxHeight(310);
+        auxi.setMaxWidth(256);
+        aux.setContent(auxi);
         this.TABPANE.getTabs().add(aux);
     }
 
     @FXML
     void removeTab(ActionEvent event) {
         this.TABPANE.getTabs().remove(this.TABPANE.getTabs().size()-1);
+        if (this.TABPANE.getTabs().isEmpty()){
+            System.exit(0);
+        }
     }
 
 }

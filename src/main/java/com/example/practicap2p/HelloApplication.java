@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         //stg = stage;
         //stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 320, 320);
         stage.setTitle("LOGIN");
         stage.setScene(scene);
         stage.show();
@@ -23,7 +23,7 @@ public class HelloApplication extends Application {
     public void changeScene(String archivo) throws IOException{
         this.stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
-        Scene Escena = new Scene(fxmlLoader.load(), 960, 540);
+        Scene Escena = new Scene(fxmlLoader.load(), 720, 440);
         this.stg.setTitle("Titulo");
 
         this.stg.setScene(Escena);
