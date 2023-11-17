@@ -33,28 +33,7 @@ public class Object195Controller {
     @FXML
     void addTab(ActionEvent event) {
         Tab aux = new Tab();
-        VBox caja = new VBox();
         aux.setText(FreindSelect.getText());
-        //Creo la caja en la que haré el display del texto
-        TextArea auxi = new TextArea();
-        auxi.setLayoutX(14);
-        auxi.setLayoutY(14);
-        auxi.setMaxHeight(310);
-        auxi.setMaxWidth(256);
-        aux.setContent(caja);
-        //Creo un boton para cerrar la pestaña, que llame a MENOSTAB
-        Button botaux = new Button();
-        botaux.setOnAction(MENOSTAB.getOnAction());
-        botaux.setText("X");
-        //Ahora a crear un TextField para manejar los mensajes
-        TextField Escritura = new TextField();
-        Escritura.setPromptText("Escribe aquí");
-        Button botesc = new Button();
-        botaux.setOnAction(changeText(););
-        botaux.setText("Enviar");
-        //Metes las cosas en la caja y la caja en lña pestaña
-        caja.getChildren().add(botaux);
-        caja.getChildren().add(auxi);
         this.TABPANE.getTabs().add(aux);
     }
 
