@@ -10,9 +10,9 @@
       <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
          <children>
             <TextArea fx:id="LENVIAR" layoutX="-8.0" layoutY="-8.0" prefHeight="347.0" prefWidth="269.0" />
-            <Button fx:id="BENVIAR" layoutX="476.0" layoutY="62.0" mnemonicParsing="false" text="Enviar" />
          </children>
       </AnchorPane>
-      <TextField fx:id="TENVIAR" layoutX="277.0" layoutY="14.0" prefHeight="57.0" prefWidth="266.0" />
+      <TextField fx:id="TENVIAR" layoutX="282.0" layoutY="14.0" prefHeight="58.0" prefWidth="254.0" />
+      <Button fx:id="BENVIAR" layoutX="488.0" layoutY="81.0" mnemonicParsing="false" onAction="#SendText" text="Enviar" />
    </children>
 </AnchorPane>

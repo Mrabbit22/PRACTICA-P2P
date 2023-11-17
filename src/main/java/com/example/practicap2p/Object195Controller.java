@@ -16,7 +16,7 @@ public class Object195Controller {
     private Tab FriendManager;
 
     @FXML
-    private Button MASTAB;
+     private Button MASTAB;
 
     @FXML
     private Button MENOSTAB;
@@ -24,6 +24,12 @@ public class Object195Controller {
     @FXML
     private TabPane TABPANE;
 
+    @FXML
+    private Button BENVIAR;
+
+
+    @FXML
+    private TextField TENVIAR;
     @FXML
     private TextArea TEXTOMOSTRARCOSAS;
     /*
@@ -47,6 +53,7 @@ public class Object195Controller {
             throw new RuntimeException(e);
         }
         aux.setText(FreindSelect.getText());
+        this.TEXTOMOSTRARCOSAS.setText("Conversación con "+FreindSelect.getText());
         this.TABPANE.getTabs().add(aux);
     }
 
@@ -58,6 +65,11 @@ public class Object195Controller {
         }
     }
 
+    @FXML
+    void SendText(ActionEvent event) {
+        String texto = this.TENVIAR.getText();
+        this.TEXTOMOSTRARCOSAS.setText(this.TEXTOMOSTRARCOSAS.getText()+"\n"+texto);
+    }
     /*
     @FXML
     void changeText(ActionEvent event) {
