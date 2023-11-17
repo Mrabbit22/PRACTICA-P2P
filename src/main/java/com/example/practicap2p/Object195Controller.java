@@ -34,18 +34,27 @@ public class Object195Controller {
     void addTab(ActionEvent event) {
         Tab aux = new Tab();
         VBox caja = new VBox();
-        aux.setText("Conexión");
+        aux.setText(FreindSelect.getText());
+        //Creo la caja en la que haré el display del texto
         TextArea auxi = new TextArea();
         auxi.setLayoutX(14);
         auxi.setLayoutY(14);
         auxi.setMaxHeight(310);
         auxi.setMaxWidth(256);
-        caja.getChildren().add(auxi);
         aux.setContent(caja);
-        //Button botaux = new Button();
-        //botaux.setOnAction(MENOSTAB.getOnAction());
-        //botaux.setText("X");
-        //aux.setContent(botaux);
+        //Creo un boton para cerrar la pestaña, que llame a MENOSTAB
+        Button botaux = new Button();
+        botaux.setOnAction(MENOSTAB.getOnAction());
+        botaux.setText("X");
+        //Ahora a crear un TextField para manejar los mensajes
+        TextField Escritura = new TextField();
+        Escritura.setPromptText("Escribe aquí");
+        Button botesc = new Button();
+        botaux.setOnAction(changeText(););
+        botaux.setText("Enviar");
+        //Metes las cosas en la caja y la caja en lña pestaña
+        caja.getChildren().add(botaux);
+        caja.getChildren().add(auxi);
         this.TABPANE.getTabs().add(aux);
     }
 
@@ -57,4 +66,19 @@ public class Object195Controller {
         }
     }
 
+    /*
+    @FXML
+    void changeText(ActionEvent event) {
+        TextArea area; String texto;
+        VBox cajaux;
+        //Saco la caja
+        cajaux = (VBox) this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
+        //Saco el TextArea en el que escribir
+        area = (TextArea) cajaux.getChildren().get(1);
+
+        //Actualizo el texto
+        area.setText(area.getText()+"\n"+texto);
+    }
+    *
+     */
 }
