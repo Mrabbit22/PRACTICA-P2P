@@ -1,14 +1,14 @@
 package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 public class Object195Controller {
+    @FXML
+    private TextField FreindSelect;
+
     @FXML
     private Tab FriendManager;
 
@@ -33,13 +33,15 @@ public class Object195Controller {
     @FXML
     void addTab(ActionEvent event) {
         Tab aux = new Tab();
+        VBox caja = new VBox();
         aux.setText("Conexión");
         TextArea auxi = new TextArea();
         auxi.setLayoutX(14);
         auxi.setLayoutY(14);
         auxi.setMaxHeight(310);
         auxi.setMaxWidth(256);
-        aux.setContent(auxi);
+        caja.getChildren().add(auxi);
+        aux.setContent(caja);
         //Button botaux = new Button();
         //botaux.setOnAction(MENOSTAB.getOnAction());
         //botaux.setText("X");
