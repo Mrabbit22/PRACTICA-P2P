@@ -66,7 +66,7 @@ public class Object195Controller {
         }
     }
 
-    /*
+
     @FXML
     void changeText(ActionEvent event) {
         TextArea area; String texto;
@@ -79,6 +79,6 @@ public class Object195Controller {
         //Actualizo el texto
         area.setText(area.getText()+"\n"+texto);
     }
-    *
-     */
+
+
 }
