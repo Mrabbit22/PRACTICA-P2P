@@ -2,8 +2,11 @@ package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 
 public class Object195Controller {
     @FXML
@@ -31,8 +34,18 @@ public class Object195Controller {
     }
     */
     @FXML
+    private void initialize(){
+
+    }
+    @FXML
     void addTab(ActionEvent event) {
+        FXMLLoader cargador = new FXMLLoader(getClass().getResource("SAMPLETAB.fxml"));
         Tab aux = new Tab();
+        try {
+            aux.setContent(cargador.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         aux.setText(FreindSelect.getText());
         this.TABPANE.getTabs().add(aux);
     }

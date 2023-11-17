@@ -1,40 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="373.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practicap2p.Object195Controller">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <TabPane fx:id="TABPANE" prefHeight="378.0" prefWidth="538.0" tabClosingPolicy="UNAVAILABLE">
-         <tabs>
-            <Tab fx:id="FriendManager" text="Friends">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="194.0">
-                     <children>
-                        <Button fx:id="MASTAB" layoutX="12.0" layoutY="56.0" mnemonicParsing="false" onAction="#addTab" text="+" />
-                        <TextField fx:id="FreindSelect" layoutX="37.0" layoutY="56.0" promptText="Start Conversation" />
-                        <Button fx:id="MENOSTAB" layoutX="503.0" layoutY="-3.0" mnemonicParsing="false" onAction="#removeTab" prefHeight="26.0" prefWidth="34.0" text="x" />
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab fx:id="SAMPLETAB" text="Untitled Tab">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextArea fx:id="LENVIAR" prefHeight="200.0" prefWidth="200.0" />
-                        <TextField fx:id="TENVIAR" layoutX="200.0" layoutY="2.0" />
-                        <Button fx:id="BENVIAR" layoutX="350.0" layoutY="2.0" mnemonicParsing="false" text="Enviar" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-         </tabs>
-      </TabPane>
+      <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <TextArea fx:id="LENVIAR" layoutX="-8.0" layoutY="-8.0" prefHeight="347.0" prefWidth="269.0" />
+            <Button fx:id="BENVIAR" layoutX="476.0" layoutY="62.0" mnemonicParsing="false" text="Enviar" />
+         </children>
+      </AnchorPane>
+      <TextField fx:id="TENVIAR" layoutX="277.0" layoutY="14.0" prefHeight="57.0" prefWidth="266.0" />
    </children>
 </AnchorPane>
