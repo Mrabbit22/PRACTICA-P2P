@@ -2,6 +2,8 @@ package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -50,7 +52,7 @@ public class Object195Controller {
         TextField Escritura = new TextField();
         Escritura.setPromptText("Escribe aquí");
         Button botesc = new Button();
-        botaux.setOnAction(changeText(););
+        botaux.setOnAction(this::SendText);
         botaux.setText("Enviar");
         //Metes las cosas en la caja y la caja en lña pestaña
         caja.getChildren().add(botaux);
@@ -66,7 +68,7 @@ public class Object195Controller {
         }
     }
 
-
+/*
     @FXML
     void changeText(ActionEvent event) {
         TextArea area; String texto;
@@ -79,6 +81,33 @@ public class Object195Controller {
         //Actualizo el texto
         area.setText(area.getText()+"\n"+texto);
     }
-
+  */
+    @FXML
+    void SendText(ActionEvent event) {
+        Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
+        if (tabContent instanceof Parent) {
+            TextArea textArea = findTextArea((Parent) tabContent);
+            if (textArea != null) {
+                textArea.setText(textArea.getText()+"\n"+"this.TENVIAR.getText()");
+            }else{
+                textArea.setText("this.TENVIAR.getText()");
+            }
+        }
+    }
+    private TextArea findTextArea(Parent parent) {
+        if (parent instanceof TextArea) {
+            return (TextArea) parent;
+        } else {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                if (child instanceof Parent) {
+                    TextArea result = findTextArea((Parent) child);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
 }
