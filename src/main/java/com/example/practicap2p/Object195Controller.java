@@ -1,6 +1,7 @@
 package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -39,12 +40,16 @@ public class Object195Controller {
         auxi.setMaxHeight(310);
         auxi.setMaxWidth(256);
         aux.setContent(auxi);
+        //Button botaux = new Button();
+        //botaux.setOnAction(MENOSTAB.getOnAction());
+        //botaux.setText("X");
+        //aux.setContent(botaux);
         this.TABPANE.getTabs().add(aux);
     }
 
     @FXML
     void removeTab(ActionEvent event) {
-        this.TABPANE.getTabs().remove(this.TABPANE.getTabs().size()-1);
+        this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
         if (this.TABPANE.getTabs().isEmpty()){
             System.exit(0);
         }
