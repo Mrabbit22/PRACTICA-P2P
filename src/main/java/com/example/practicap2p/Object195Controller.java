@@ -3,6 +3,8 @@ package com.example.practicap2p;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -53,22 +55,45 @@ public class Object195Controller {
             throw new RuntimeException(e);
         }
         aux.setText(FreindSelect.getText());
-        this.TEXTOMOSTRARCOSAS.setText("Conversación con "+FreindSelect.getText());
         this.TABPANE.getTabs().add(aux);
     }
 
     @FXML
     void removeTab(ActionEvent event) {
+        System.out.println(this.TABPANE.getSelectionModel().getSelectedIndex());
         this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
         if (this.TABPANE.getTabs().isEmpty()){
             System.exit(0);
         }
     }
-
+    private int getIndex(){
+        return this.TABPANE.getSelectionModel().getSelectedIndex();
+    }
     @FXML
     void SendText(ActionEvent event) {
-        String texto = this.TENVIAR.getText();
-        this.TEXTOMOSTRARCOSAS.setText(this.TEXTOMOSTRARCOSAS.getText()+"\n"+texto);
+        System.out.println(getIndex());
+        Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
+        if (tabContent instanceof Parent) {
+            TextField textField = findTextField((Parent) tabContent);
+            if (textField != null) {
+                textField.setText(this.TENVIAR.getText());
+            }
+        }
+    }
+    private TextField findTextField(Parent parent) {
+        if (parent instanceof TextField) {
+            return (TextField) parent;
+        } else {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                if (child instanceof Parent) {
+                    TextField result = findTextField((Parent) child);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        }
+        return null;
     }
     /*
     @FXML
