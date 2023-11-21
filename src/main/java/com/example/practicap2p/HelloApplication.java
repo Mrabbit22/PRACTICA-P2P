@@ -23,7 +23,7 @@ public class HelloApplication extends Application {
     public void changeScene(String archivo) throws IOException{
         this.stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
-        Scene Escena = new Scene(fxmlLoader.load(), 720, 440);
+        Scene Escena = new Scene(fxmlLoader.load(), 540, 440);
         this.stg.setTitle("Titulo");
 
         this.stg.setScene(Escena);

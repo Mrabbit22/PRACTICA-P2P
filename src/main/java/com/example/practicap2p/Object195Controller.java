@@ -42,7 +42,7 @@ public class Object195Controller {
         auxi.setLayoutX(14);
         auxi.setLayoutY(14);
         auxi.setMaxHeight(310);
-        auxi.setMaxWidth(256);
+        //auxi.setMaxWidth(256);
         aux.setContent(caja);
         //Creo un boton para cerrar la pestaña, que llame a MENOSTAB
         Button botaux = new Button();
@@ -55,8 +55,9 @@ public class Object195Controller {
         botaux.setOnAction(this::SendText);
         botaux.setText("Enviar");
         //Metes las cosas en la caja y la caja en lña pestaña
-        caja.getChildren().add(botaux);
         caja.getChildren().add(auxi);
+        caja.getChildren().add(botaux);
+        caja.getChildren().add(Escritura);
         this.TABPANE.getTabs().add(aux);
     }
 
@@ -87,10 +88,11 @@ public class Object195Controller {
         Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
         if (tabContent instanceof Parent) {
             TextArea textArea = findTextArea((Parent) tabContent);
-            if (textArea != null) {
-                textArea.setText(textArea.getText()+"\n"+"this.TENVIAR.getText()");
+            TextField textField = findTextField((Parent) tabContent);
+            if (textArea.getText() != null) {
+                textArea.setText(textArea.getText()+"\n"+textField.getText());
             }else{
-                textArea.setText("this.TENVIAR.getText()");
+                textArea.setText(textField.getText());
             }
         }
     }
@@ -101,6 +103,21 @@ public class Object195Controller {
             for (Node child : parent.getChildrenUnmodifiable()) {
                 if (child instanceof Parent) {
                     TextArea result = findTextArea((Parent) child);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    private TextField findTextField(Parent parent) {
+        if (parent instanceof TextField) {
+            return (TextField) parent;
+        } else {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                if (child instanceof Parent) {
+                    TextField result = findTextField((Parent) child);
                     if (result != null) {
                         return result;
                     }
