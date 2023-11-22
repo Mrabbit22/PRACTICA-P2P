@@ -9,8 +9,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
+//C:\Users\ldiaz\OneDrive\Escritorio\UNI AÑO 3\CODIS\PRACTICA-CALLBACK
 public class HelloController {
 
     @FXML
@@ -33,9 +36,12 @@ public class HelloController {
 
     @FXML
     void onHelloButtonClick(ActionEvent event) {
-        //System.out.println("Usuario : " + FieldUser.getText());
-        //System.out.println("Contraseña : " + FieldPassword.getText());
+        File file = new File("C:\\Users\\ldiaz\\OneDrive\\Escritorio\\UNI AÑO 3\\CODIS\\PRACTICA-CALLBACK\\usuarios.txt");
         HelloApplication HA = new HelloApplication();
+        String palabras2 = file.toString();
+        String[] palabras = file.toString().split(" ");//Dividirlo en líneas
+        //No
+        System.out.println(palabras2);// --> Imprime el PATH
         try {
             HA.changeScene("Object195.fxml");
             ((Node) (event.getSource())).getScene().getWindow().hide();

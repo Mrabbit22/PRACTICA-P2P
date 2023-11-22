@@ -91,8 +91,10 @@ public class Object195Controller {
             TextField textField = findTextField((Parent) tabContent);
             if (textArea.getText() != null) {
                 textArea.setText(textArea.getText()+"\n"+textField.getText());
+                textField.clear();
             }else{
                 textArea.setText(textField.getText());
+                textField.clear();
             }
         }
     }
