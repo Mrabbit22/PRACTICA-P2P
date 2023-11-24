@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="290.0" prefWidth="339.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.practicap2p.HelloController">
+<VBox alignment="CENTER" prefHeight="290.0" prefWidth="339.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practicap2p.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -29,6 +29,7 @@
                 <Button fx:id="ButtonLogIn" layoutX="28.0" layoutY="149.0" onAction="#onHelloButtonClick" prefHeight="26.0" prefWidth="150.0" text="LOGIN" />
                <TextField fx:id="FieldUser" layoutX="29.0" layoutY="27.0" promptText="User" />
                <PasswordField fx:id="FieldPassword" layoutX="30.0" layoutY="82.0" promptText="Passwrod" />
+               <Button fx:id="Register" layoutX="29.0" layoutY="115.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefHeight="26.0" prefWidth="150.0" text="REGISTER" />
             </children>
          </AnchorPane>
      </items>

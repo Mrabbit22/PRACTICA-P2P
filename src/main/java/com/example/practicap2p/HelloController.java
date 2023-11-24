@@ -35,13 +35,19 @@ public class HelloController {
     private Label welcomeText;
 
     @FXML
+    private Button Register;
+    @FXML
+    void onRegisterButtonClick(ActionEvent event) {
+        //Aquí metes los datos que te pasan en los fields en la base de datos
+    }
+    @FXML
     void onHelloButtonClick(ActionEvent event) {
-        File file = new File("C:\\Users\\ldiaz\\OneDrive\\Escritorio\\UNI AÑO 3\\CODIS\\PRACTICA-CALLBACK\\usuarios.txt");
+        //File file = new File("C:\\Users\\ldiaz\\OneDrive\\Escritorio\\UNI AÑO 3\\CODIS\\PRACTICA-CALLBACK\\usuarios.txt");
         HelloApplication HA = new HelloApplication();
-        String palabras2 = file.toString();
-        String[] palabras = file.toString().split(" ");//Dividirlo en líneas
+        //String palabras2 = file.toString();
+        //String[] palabras = file.toString().split(" ");//Dividirlo en líneas
         //No
-        System.out.println(palabras2);// --> Imprime el PATH
+        //System.out.println(palabras2);// --> Imprime el PATH
         try {
             HA.changeScene("Object195.fxml");
             ((Node) (event.getSource())).getScene().getWindow().hide();
