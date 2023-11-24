@@ -44,12 +44,16 @@ public class Object195Controller {
     @FXML
     void addFriend(ActionEvent event) {
         this.FriendList.setText(this.FriendList.getText() + "\n" + " " + this.FriendTag.getText() + " ");
+        //Puedo tener una lista de amigos, y cada vez que meto uno actualizarla???
+        //Pero entre otras cosas tengo que actualizar el servidor
+        //Lo único que debe hacer es cada vez que se conecte alguien, le envie la lista
+        //De objetos
     }
     @FXML
     void addTab(ActionEvent event) {
         Tab aux = new Tab();
         VBox caja = new VBox();
-        if (this.FriendList.getText().contains(" " + this.FreindSelect.getText() + " ")){
+        //if (this.FriendList.getText().contains(" " + this.FreindSelect.getText() + " ")){
             aux.setText(FreindSelect.getText());
             //Creo la caja en la que haré el display del texto
             TextArea auxi = new TextArea();
@@ -74,7 +78,7 @@ public class Object195Controller {
             caja.getChildren().add(botaux);
             caja.getChildren().add(Escritura);
             this.TABPANE.getTabs().add(aux);
-        }
+        //}
     }
 
     @FXML
@@ -106,7 +110,7 @@ public class Object195Controller {
             TextArea textArea = findTextArea((Parent) tabContent);
             TextField textField = findTextField((Parent) tabContent);
             if (textArea.getText() != null) {
-                textArea.setText(textArea.getText()+"\n"+textField.getText());
+                textArea.setText(textArea.getText()+"\n"+"TU: "+textField.getText());
                 textField.clear();
             }else{
                 textArea.setText(textField.getText());
