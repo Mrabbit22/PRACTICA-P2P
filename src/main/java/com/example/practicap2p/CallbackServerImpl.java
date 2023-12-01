@@ -34,28 +34,15 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
       }
   }  
 
-// This remote method allows an object client to 
-// cancel its registration for callback
-// @param id is an ID for the client; to be used by
-// the server to uniquely identify the registered client.
   public synchronized void unregisterForCallback(CallbackClientInterface callbackClientObject)
-    throws RemoteException{
-    if (clientList.removeElement(callbackClientObject)) {
-      System.out.println("Cliente no registrado ");
-    } else {
-       System.out.println(
-         "No Registrado: el cliente no estaba registrado.");
-    }
-  } 
+    throws RemoteException{clientList.removeElement(callbackClientObject);}
 
   public synchronized void doCallbacks(String linea) throws RemoteException{
     // make callback to each registered client
     System.out.println("Llamadas iniciadas ---");
 
     for (int i = 0; i < clientList.size(); i++){
-      // convert the vector object to a callback object
       CallbackClientInterface nextClient = (CallbackClientInterface)clientList.elementAt(i);
-
       //Comprobar si está conectado
         //Eliminarlo del clientList
         try{
@@ -65,9 +52,6 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
             System.out.println("Alguien se ha desconectado forzosamente");
             this.unregisterForCallback(nextClient);
         }
-    }// end for
-    System.out.println("********************************\n" +
-                       "Ronda de llamadas acabada ---\n********************************");
-  } // doCallbacks
-
-}// end CallbackServerImpl class   
+    }
+  }
+}

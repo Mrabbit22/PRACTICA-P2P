@@ -2,10 +2,19 @@ package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class Object195Controller {
     @FXML
@@ -34,16 +43,33 @@ public class Object195Controller {
 
     @FXML
     private TextArea FriendList;
-    /*
+    private String nombre;
+
     public void initialize(){
-        Tab aux = new Tab();
-        aux.setText("Amigos");
-        this.TABPANE.getTabs().add(aux);
+        /*
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("hello-view.fxml"));
+        try {
+            Parent loginparent = loader.load();
+            Scene loginscene = new Scene(loginparent);
+            HelloController controlador = loader.getController();
+            this.nombre = controlador.getNombre();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
+
+        String registryURL = "rmi://localhost:4444/callback";
+        try {
+            CallbackClientInterface callbackObj = new CallbackClientImpl("Turbio");
+            CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
+        } catch (RemoteException | MalformedURLException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
     }
-    */
+
     @FXML
     void addFriend(ActionEvent event) {
-        this.FriendList.setText(this.FriendList.getText() + "\n" + " " + this.FriendTag.getText() + " ");
+        //this.FriendList.setText(this.FriendList.getText() + "\n" + " " + this.FriendTag.getText() + " ");
         //Puedo tener una lista de amigos, y cada vez que meto uno actualizarla???
         //Pero entre otras cosas tengo que actualizar el servidor
         //Lo único que debe hacer es cada vez que se conecte alguien, le envie la lista
@@ -80,7 +106,10 @@ public class Object195Controller {
             this.TABPANE.getTabs().add(aux);
         //}
     }
-
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+        //System.out.println(this.nombre);
+    }
     @FXML
     void removeTab(ActionEvent event) {
         this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
@@ -110,7 +139,7 @@ public class Object195Controller {
             TextArea textArea = findTextArea((Parent) tabContent);
             TextField textField = findTextField((Parent) tabContent);
             if (textArea.getText() != null) {
-                textArea.setText(textArea.getText()+"\n"+"TU: "+textField.getText());
+                textArea.setText(textArea.getText()+"\n"+ this.nombre + ": "+textField.getText());
                 textField.clear();
             }else{
                 textArea.setText(textField.getText());

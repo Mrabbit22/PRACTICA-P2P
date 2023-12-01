@@ -10,14 +10,15 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     private Stage stg;
+    private Scene login;
     @Override
     public void start(Stage stage) throws IOException {
         //stg = stage;
         //stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 320);
+        login = new Scene(fxmlLoader.load(), 320, 320);
         stage.setTitle("LOGIN");
-        stage.setScene(scene);
+        stage.setScene(login);
         stage.show();
     }
     public void changeScene(String archivo) throws IOException{
@@ -28,8 +29,6 @@ public class HelloApplication extends Application {
 
         this.stg.setScene(Escena);
         this.stg.show();
-        //Parent panel = FXMLLoader.load(getClass().getResource(archivo));
-        //stg.getScene().setRoot(panel);
     }
     public static void main(String[] args) {
         launch();
