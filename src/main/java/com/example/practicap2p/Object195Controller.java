@@ -20,6 +20,10 @@ public class Object195Controller {
     @FXML
     private TextField FreindSelect;
 
+    private CallbackClientImpl cliente;
+
+    private CallbackServerInterface servidor;
+
     @FXML
     private TextField FriendTag;
 
@@ -45,7 +49,7 @@ public class Object195Controller {
     private TextArea FriendList;
     private String nombre;
 
-    public void initialize(){
+    //public void initialize(){
         /*
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("hello-view.fxml"));
@@ -57,19 +61,17 @@ public class Object195Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }*/
-
-        String registryURL = "rmi://localhost:4444/callback";
-        try {
-            CallbackClientInterface callbackObj = new CallbackClientImpl("Turbio");
-            CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
-        } catch (RemoteException | MalformedURLException | NotBoundException e) {
-            throw new RuntimeException(e);
+    //}
+    public void updateFriendLista(){
+        this.FriendList.clear();
+        for(Object token : cliente.clientList){//Podrías castearlo aquí
+            CallbackClientInterface aux = (CallbackClientInterface) token;
+            //this.FriendList.setText(this.FriendList.getText() + "\n" + aux.nombre);
         }
     }
-
     @FXML
     void addFriend(ActionEvent event) {
-        //this.FriendList.setText(this.FriendList.getText() + "\n" + " " + this.FriendTag.getText() + " ");
+        //this.FriendList.setText(this.FriendList.getText() + "\n" + " " + amigo + " ");
         //Puedo tener una lista de amigos, y cada vez que meto uno actualizarla???
         //Pero entre otras cosas tengo que actualizar el servidor
         //Lo único que debe hacer es cada vez que se conecte alguien, le envie la lista
@@ -108,7 +110,12 @@ public class Object195Controller {
     }
     public void setNombre(String nombre){
         this.nombre = nombre;
-        //System.out.println(this.nombre);
+    }
+    public void setCliente(CallbackClientImpl cliente){
+        this.cliente = cliente;
+    }
+    public void setServidor(CallbackServerInterface servidor){
+        this.servidor = servidor;
     }
     @FXML
     void removeTab(ActionEvent event) {
@@ -118,20 +125,6 @@ public class Object195Controller {
         }
     }
 
-/*
-    @FXML
-    void changeText(ActionEvent event) {
-        TextArea area; String texto;
-        VBox cajaux;
-        //Saco la caja
-        cajaux = (VBox) this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
-        //Saco el TextArea en el que escribir
-        area = (TextArea) cajaux.getChildren().get(1);
-
-        //Actualizo el texto
-        area.setText(area.getText()+"\n"+texto);
-    }
-  */
     @FXML
     void SendText(ActionEvent event) {
         Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();

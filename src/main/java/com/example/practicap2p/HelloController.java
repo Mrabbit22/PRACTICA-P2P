@@ -15,6 +15,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 
 //C:\Users\ldiaz\OneDrive\Escritorio\UNI AÑO 3\CODIS\PRACTICA-CALLBACK
@@ -55,7 +59,8 @@ public class HelloController {
             //HA.changeScene("Object195.fxml");--> Esto ahora lo voy a hacer yo
             this.stg = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
-            Scene Escena = new Scene(fxmlLoader.load(), 540, 440);
+            Parent root = fxmlLoader.load();
+            Scene Escena = new Scene(root, 540, 440);
             this.stg.setTitle("Titulo");
 
             this.stg.setScene(Escena);
@@ -67,6 +72,19 @@ public class HelloController {
             throw new RuntimeException(e);
         }
         Controlador.setNombre(this.getNombre());
+        //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
+        String registryURL = "rmi://localhost:6789/P2P";
+        try {
+            CallbackClientInterface callbackObj = new CallbackClientImpl();
+            callbackObj.setNombre(this.getNombre());
+            CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
+            h.registerForCallback(callbackObj);
+            Controlador.setCliente((CallbackClientImpl) callbackObj);
+            Controlador.setServidor(h);
+            Controlador.updateFriendLista();
+        } catch (RemoteException | MalformedURLException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
         //Sacar Object195Controller y enviarle el nombre
     }
 

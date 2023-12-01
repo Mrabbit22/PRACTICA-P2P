@@ -21,9 +21,9 @@ public class HelloApplication extends Application {
         stage.setScene(login);
         stage.show();
     }
-    public void changeScene(String archivo) throws IOException{
+    public void changeScene(FXMLLoader fxmlLoader) throws IOException{
         this.stg = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
+        fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
         Scene Escena = new Scene(fxmlLoader.load(), 540, 440);
         this.stg.setTitle("Titulo");
 

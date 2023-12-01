@@ -15,8 +15,11 @@ public class CallbackClientImpl extends UnicastRemoteObject
    public Vector clientList;
    public String nombre;
 
-   public CallbackClientImpl(String nombre) throws RemoteException {
+   public CallbackClientImpl() throws RemoteException {
       super();
+      this.clientList = new Vector();
+   }
+   public void setNombre(String nombre)throws RemoteException{
       this.nombre = nombre;
    }
 
@@ -26,7 +29,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
       return returnMessage;
    }      
 
-   public void recibirObjeto(CallbackClientInterface objeto){
+   public void recibirObjeto(CallbackClientInterface objeto)throws RemoteException{
       clientList.addElement(objeto);
    }
 }// end CallbackClientImpl class   

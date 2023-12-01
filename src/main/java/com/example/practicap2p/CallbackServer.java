@@ -11,17 +11,11 @@ import java.rmi.registry.Registry;
 public class CallbackServer  {
   public static void main(String args[]) {
     ////AQUI EMPIEZA LO DE ANTES\\\\
-    InputStreamReader is =
-      new InputStreamReader(System.in);
-    BufferedReader br = new BufferedReader(is);
-    String portNum, registryURL;
-    try{     
-      System.out.println("Indica el puerto de RMIregistry :");
-      portNum = (br.readLine()).trim();
-      int RMIPortNum = Integer.parseInt(portNum);
-      startRegistry(RMIPortNum);
+    String registryURL;
+    try{
+      startRegistry(6789);
       CallbackServerImpl exportedObj = new CallbackServerImpl();
-      registryURL = "rmi://localhost:" + portNum + "/callback";
+      registryURL = "rmi://localhost:6789/P2P";
       Naming.rebind(registryURL, exportedObj);//Aquí es donde envias cosas al objeto
 
     }
