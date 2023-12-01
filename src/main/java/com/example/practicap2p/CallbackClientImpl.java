@@ -29,7 +29,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
       return returnMessage;
    }      
 
-   public void recibirObjeto(CallbackClientInterface objeto)throws RemoteException{
+   public void recibirObjeto(String Nombre, CallbackClientInterface objeto)throws RemoteException{
       clientList.addElement(objeto);
    }
 }// end CallbackClientImpl class   

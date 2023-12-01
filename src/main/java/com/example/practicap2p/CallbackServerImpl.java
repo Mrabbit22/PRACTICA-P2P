@@ -2,39 +2,40 @@ package com.example.practicap2p;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class CallbackServerImpl extends UnicastRemoteObject implements CallbackServerInterface {
 
-   private Vector clientList;
+   private HashMap<String,CallbackClientInterface> clientList;
 
 
    public CallbackServerImpl() throws RemoteException {
       super( );
-     clientList = new Vector();
+     clientList = new HashMap<>();
    }
 
   public String sayHello( )
     throws RemoteException {
       return("hello");
   }
-  public synchronized void registerForCallback(CallbackClientInterface callbackClientObject)
+  public synchronized void registerForCallback(CallbackClientInterface callbackClientObject,String nombre)
     throws RemoteException{
        CallbackClientInterface aux;
 
-      if (!(clientList.contains(callbackClientObject))) {
-          for(Object token : clientList) { //Si todos son amigos no compruebo nada
-              aux = (CallbackClientInterface) token;
+      if (!(clientList.containsKey(nombre))) {
+          for( Map.Entry<String, CallbackClientInterface> token : clientList.entrySet()) { //Si todos son amigos no compruebo nada
               //Meto en el cliente nuevo un amigo
-              callbackClientObject.recibirObjeto(aux);
+              callbackClientObject.recibirObjeto(token.getKey(),token.getValue());
               //Meto en el amigo un cliente nuevo
-              aux.recibirObjeto(callbackClientObject);
+              token.getValue().recibirObjeto(nombre,callbackClientObject);
           }
-         clientList.addElement(callbackClientObject);
+         clientList.put(nombre,callbackClientObject);
       }
   }  
 
-  public synchronized void unregisterForCallback(CallbackClientInterface callbackClientObject)
+  public synchronized void unregisterForCallback(String Nombre, CallbackClientInterface callbackClientObject)
     throws RemoteException{clientList.removeElement(callbackClientObject);}
 
   public synchronized void doCallbacks(String linea) throws RemoteException{
