@@ -1,0 +1,3 @@
+El callbackClientObject es lo que necesita tener cada cliente para contactar con otro
+Interface se castea a Impl == Obj
+La función a la que pasas entonce el CallbackClientInterface que luego casteas a callbackClientObject, está CallbackClientImp  l
