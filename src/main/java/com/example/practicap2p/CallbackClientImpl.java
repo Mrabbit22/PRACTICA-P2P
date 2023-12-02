@@ -2,6 +2,8 @@ package com.example.practicap2p;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -12,12 +14,15 @@ import java.util.Vector;
 
 public class CallbackClientImpl extends UnicastRemoteObject
      implements CallbackClientInterface {
-   public Vector clientList;
+   private HashMap<String,CallbackClientInterface> clientList;
    public String nombre;
 
    public CallbackClientImpl() throws RemoteException {
       super();
-      this.clientList = new Vector();
+      this.clientList = new HashMap<>();
+   }
+   public HashMap<String, CallbackClientInterface> getLista(){
+      return this.clientList;
    }
    public void setNombre(String nombre)throws RemoteException{
       this.nombre = nombre;
@@ -30,6 +35,6 @@ public class CallbackClientImpl extends UnicastRemoteObject
    }      
 
    public void recibirObjeto(String Nombre, CallbackClientInterface objeto)throws RemoteException{
-      clientList.addElement(objeto);
+      clientList.put(Nombre,objeto);
    }
 }// end CallbackClientImpl class   

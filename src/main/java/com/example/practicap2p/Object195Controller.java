@@ -15,6 +15,7 @@ import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 public class Object195Controller {
     @FXML
@@ -62,11 +63,10 @@ public class Object195Controller {
             throw new RuntimeException(e);
         }*/
     //}
-    public void updateFriendLista(){
+    public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
         this.FriendList.clear();
-        for(Object token : cliente.clientList){//Podrías castearlo aquí
-            CallbackClientInterface aux = (CallbackClientInterface) token;
-            //this.FriendList.setText(this.FriendList.getText() + "\n" + aux.nombre);
+        for(Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){//Podrías castearlo aquí
+            this.FriendList.setText(this.FriendList.getText() + "\n" + token.getKey());
         }
     }
     @FXML

@@ -78,7 +78,7 @@ public class HelloController {
             CallbackClientInterface callbackObj = new CallbackClientImpl();
             callbackObj.setNombre(this.getNombre());
             CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
-            h.registerForCallback(callbackObj);
+            h.registerForCallback(this.getNombre(),callbackObj);
             Controlador.setCliente((CallbackClientImpl) callbackObj);
             Controlador.setServidor(h);
             Controlador.updateFriendLista();

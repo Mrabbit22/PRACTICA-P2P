@@ -20,7 +20,7 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
     throws RemoteException {
       return("hello");
   }
-  public synchronized void registerForCallback(CallbackClientInterface callbackClientObject,String nombre)
+  public synchronized void registerForCallback(String nombre, CallbackClientInterface callbackClientObject)
     throws RemoteException{
        CallbackClientInterface aux;
 
@@ -35,13 +35,15 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
       }
   }  
 
-  public synchronized void unregisterForCallback(String Nombre, CallbackClientInterface callbackClientObject)
-    throws RemoteException{clientList.removeElement(callbackClientObject);}
+  public synchronized void unregisterForCallback(String Nombre)
+    throws RemoteException{clientList.remove(Nombre);}
 
-  public synchronized void doCallbacks(String linea) throws RemoteException{
-    // make callback to each registered client
-    System.out.println("Llamadas iniciadas ---");
 
+    public synchronized void doCallbacks(String linea) throws RemoteException {
+        // make callback to each registered client
+        System.out.println("Llamadas iniciadas ---");
+    }
+    /*
     for (int i = 0; i < clientList.size(); i++){
       CallbackClientInterface nextClient = (CallbackClientInterface)clientList.elementAt(i);
       //Comprobar si está conectado
@@ -55,4 +57,5 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
         }
     }
   }
+  */
 }

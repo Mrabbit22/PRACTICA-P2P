@@ -15,7 +15,7 @@ public interface CallbackServerInterface extends Remote {
 //        object of the client; to be used by the server
 //        to make its callbacks.
 
-  public void registerForCallback(
+  public void registerForCallback(String Nombre,
     CallbackClientInterface callbackClientObject
     ) throws RemoteException;
 
@@ -23,6 +23,6 @@ public interface CallbackServerInterface extends Remote {
 // cancel its registration for callback
 
   public void unregisterForCallback(
-    CallbackClientInterface callbackClientObject)
+    String Nombre)
     throws RemoteException;
 }
