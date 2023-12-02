@@ -61,7 +61,7 @@ public class HelloController {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
             Parent root = fxmlLoader.load();
             Scene Escena = new Scene(root, 540, 440);
-            this.stg.setTitle(this.getNombre());
+            this.stg.setTitle("Chat de " + this.getNombre());
 
             this.stg.setScene(Escena);
             this.stg.show();
