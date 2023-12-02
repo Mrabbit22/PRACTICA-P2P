@@ -125,6 +125,20 @@ public class Object195Controller {
         }
     }
 
+    public void sentText(String Texto, String User){
+        Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
+        if (tabContent instanceof Parent) {
+            TextArea textArea = findTextArea((Parent) tabContent);
+            TextField textField = findTextField((Parent) tabContent);
+            if (textArea.getText() != null) {
+                textArea.setText(textArea.getText()+"\n"+ User + ": "+Texto);
+                textField.clear();
+            }else{
+                textArea.setText(textField.getText());
+                textField.clear();
+            }
+        }
+    }
     @FXML
     void SendText(ActionEvent event) {
         Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
@@ -134,6 +148,8 @@ public class Object195Controller {
             if (textArea.getText() != null) {
                 textArea.setText(textArea.getText()+"\n"+ this.nombre + ": "+textField.getText());
                 textField.clear();
+                //Itero por la lista de amigos -> Busco el del chat
+                //Uso su objeto cliente para enviar el mensaje
             }else{
                 textArea.setText(textField.getText());
                 textField.clear();
