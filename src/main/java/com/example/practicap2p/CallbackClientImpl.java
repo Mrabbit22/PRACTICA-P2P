@@ -16,6 +16,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
      implements CallbackClientInterface {
    private HashMap<String,CallbackClientInterface> clientList;
    public String nombre;
+   private Object195Controller controlador;
 
    public CallbackClientImpl() throws RemoteException {
       super();
@@ -24,11 +25,15 @@ public class CallbackClientImpl extends UnicastRemoteObject
    public HashMap<String, CallbackClientInterface> getLista(){
       return this.clientList;
    }
+   public void setControlador(Object195Controller controlador)throws RemoteException{
+      this.controlador = controlador;
+   }
    public void setNombre(String nombre)throws RemoteException{
       this.nombre = nombre;
    }
 
-   public String notifyMe(String message){
+   public String notifyMe(String message){//Algo así pero que llame a la de escribir mensaje
+      //Entonces he de modificar la de escribir mensajes para que mire el usuario
       String returnMessage = "Recibido: " + message;
       System.out.println(returnMessage);
       return returnMessage;
@@ -36,5 +41,9 @@ public class CallbackClientImpl extends UnicastRemoteObject
 
    public void recibirObjeto(String Nombre, CallbackClientInterface objeto)throws RemoteException{
       clientList.put(Nombre,objeto);
+   }
+   public void recibirObjetoUPD(String Nombre, CallbackClientInterface objeto)throws RemoteException{
+      clientList.put(Nombre,objeto);
+      this.controlador.updateFriendLista();
    }
 }// end CallbackClientImpl class   
