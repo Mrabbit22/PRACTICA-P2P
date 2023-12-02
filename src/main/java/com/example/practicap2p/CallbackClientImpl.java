@@ -46,4 +46,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
       clientList.put(Nombre,objeto);
       this.controlador.updateFriendLista();
    }
+   public void sentText(String Nombre, String Texto)throws RemoteException{
+      this.controlador.sentText(Texto,Nombre);
+   }
 }// end CallbackClientImpl class   

@@ -125,7 +125,7 @@ public class Object195Controller {
         }
     }
 
-    public void sentText(String Texto, String User){
+    public void sentText(String Texto, String User){//Mirar que lo añada al Tab al que pertenece
         Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
         if (tabContent instanceof Parent) {
             TextArea textArea = findTextArea((Parent) tabContent);
@@ -147,9 +147,19 @@ public class Object195Controller {
             TextField textField = findTextField((Parent) tabContent);
             if (textArea.getText() != null) {
                 textArea.setText(textArea.getText()+"\n"+ this.nombre + ": "+textField.getText());
-                textField.clear();
                 //Itero por la lista de amigos -> Busco el del chat
                 //Uso su objeto cliente para enviar el mensaje
+                for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){
+                    //Como saco el nombre del tab en el que estoy
+                    if(token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText())){
+                        try {
+                            token.getValue().sentText(this.nombre,textField.getText());
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+                textField.clear();
             }else{
                 textArea.setText(textField.getText());
                 textField.clear();

@@ -12,4 +12,5 @@ public interface CallbackClientInterface
     public void recibirObjetoUPD(String nombre, CallbackClientInterface objeto) throws RemoteException;
     public void setNombre(String nombre) throws RemoteException;
     public void setControlador(Object195Controller controlador) throws RemoteException;
+    public void sentText(String Nombre, String Texto)throws RemoteException;
 }
