@@ -66,7 +66,7 @@ public class Object195Controller {
     public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
         this.FriendList.clear();
         for(Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){//Podrías castearlo aquí
-            this.FriendList.setText(this.FriendList.getText() + "\n" + token.getKey());
+            this.FriendList.setText(this.FriendList.getText() + "\n" + " " + token.getKey() + " ");
         }
     }
     @FXML
