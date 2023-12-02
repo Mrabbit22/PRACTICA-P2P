@@ -30,6 +30,7 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
               callbackClientObject.recibirObjeto(token.getKey(),token.getValue());
               //Meto en el amigo un cliente nuevo
               token.getValue().recibirObjeto(nombre,callbackClientObject);
+              //Si le paso el controller al cliente, podría actualizarlo desde aquí, sin pasarlo al servidor
           }
          clientList.put(nombre,callbackClientObject);
       }

@@ -81,7 +81,7 @@ public class Object195Controller {
     void addTab(ActionEvent event) {
         Tab aux = new Tab();
         VBox caja = new VBox();
-        //if (this.FriendList.getText().contains(" " + this.FreindSelect.getText() + " ")){
+        if (this.FriendList.getText().contains(" " + this.FreindSelect.getText() + " ")){
             aux.setText(FreindSelect.getText());
             //Creo la caja en la que haré el display del texto
             TextArea auxi = new TextArea();
@@ -106,7 +106,7 @@ public class Object195Controller {
             caja.getChildren().add(botaux);
             caja.getChildren().add(Escritura);
             this.TABPANE.getTabs().add(aux);
-        //}
+        }
     }
     public void setNombre(String nombre){
         this.nombre = nombre;
