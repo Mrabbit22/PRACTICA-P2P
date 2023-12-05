@@ -13,8 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -52,67 +51,62 @@ public class HelloController {
         //Aquí metes los datos que te pasan en los fields en la base de datos
     }
     public String getNombre(){return FieldUser.getText();}
+    public String getContrasena(){return FieldPassword.getText();}
     @FXML
-    void onHelloButtonClick(ActionEvent event) {
+    void onHelloButtonClick(ActionEvent event) throws RemoteException {
         //HelloApplication HA = new HelloApplication();
-        try {
-            //HA.changeScene("Object195.fxml");--> Esto ahora lo voy a hacer yo
-            this.stg = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene Escena = new Scene(root, 540, 440);
-            this.stg.setTitle("Chat de " + this.getNombre());
-
-            this.stg.setScene(Escena);
-            this.stg.show();
-            //System.out.println(this.getNombre());
-            this.Controlador = fxmlLoader.getController();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        //LO QUE PUEDO HACER AHORA ES LEER UN ARCHIVO ALGO ASÍ:
-        //USUARIO CONTRASEÑA AMIGO1,AMIGO2,AMIGO3.....
-        //LEO, SEPARO POR ESPACIOS, MIRO SI COINCIDE NOMBRE, SI NO REPITO, SI SI
-        //LE PASO EL NOMBRE A Object 195
-        //LE PASO LA LISTA DE AMIGOS AL SERVIDOR AL HACER LA CONEXIÓN -> PARTE DIFICIL
-
-        //Abrir archivo
-        //Separar por espacios
-        //Comprobar contra this.getNombre
-        //Si no coincide repito (Posible while)
-        //Si coincide reviso contraseña, y si también coincide
-        //LOS AMIGOS SON ESTÁTICOS, NO PUEDE SER
-        //TAN COMPLICADO PASARLE UNA LISTA DE NOMBRES AL SERVIDOR
-        //MIRAR SI MI HASMAP DE USUARIO CONTIENE ESE AMIGO
-        //Y QUE REVISE CADA VEZ QUE ALGUIEN SE CONECTA
-        //AL CONECTARSE ALGUIEN
-        //ITERO POR LA LISTA DE NOMBRES
-            //ITERO POR EL HASHMAP DE USUARIOS
-                //SI COINCIDE NOMBRE INTERCAMBIAN OBJETOS
-
-
-        //Al hacer la conexión, modificar para que se pasen solo los amigos
-        //Un arraylist, que mire los nombres en ambos clientes
-        //O un hashmap con clave usuarios y contenido amigos
-
-        Controlador.setNombre(this.getNombre());
-
-        //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
         String registryURL = "rmi://localhost:6789/P2P";
+        CallbackServerInterface h;
         try {
-            CallbackClientInterface callbackObj = new CallbackClientImpl();
-            callbackObj.setNombre(this.getNombre());
-            CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
-            callbackObj.setControlador(Controlador);
-            h.registerForCallback(this.getNombre(),callbackObj);
-            Controlador.setCliente((CallbackClientImpl) callbackObj);
-            Controlador.setServidor(h);
-            Controlador.updateFriendLista();
-        } catch (RemoteException | MalformedURLException | NotBoundException e) {
+            h = (CallbackServerInterface) Naming.lookup(registryURL);
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
             throw new RuntimeException(e);
         }
-        //Sacar Object195Controller y enviarle el nombre
-    }
+        String[] listaamigos;
+        try {
+            listaamigos = h.login(this.getNombre(),this.getContrasena());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        if (listaamigos!=null) {
+            try {
+                //HA.changeScene("Object195.fxml");--> Esto ahora lo voy a hacer yo
+                this.stg = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
+                Parent root = fxmlLoader.load();
+                Scene Escena = new Scene(root, 540, 440);
+                this.stg.setTitle("Chat de " + this.getNombre());
 
+                this.stg.setScene(Escena);
+                this.stg.show();
+                //System.out.println(this.getNombre());
+                this.Controlador = fxmlLoader.getController();
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            //Al hacer la conexión, modificar para que se pasen solo los amigos
+            //Un arraylist, que mire los nombres en ambos clientes
+            //O un hashmap con clave usuarios y contenido amigos
+
+            Controlador.setNombre(this.getNombre());
+
+            //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
+            try {
+                CallbackClientInterface callbackObj = new CallbackClientImpl();
+                callbackObj.setNombre(this.getNombre());
+                //CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
+                callbackObj.setControlador(Controlador);
+                h.registerForCallback(this.getNombre(), callbackObj, listaamigos);
+                Controlador.setCliente((CallbackClientImpl) callbackObj);
+                Controlador.setServidor(h);
+                Controlador.updateFriendLista();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+            //Sacar Object195Controller y enviarle el nombre
+        }
+    }
 }
