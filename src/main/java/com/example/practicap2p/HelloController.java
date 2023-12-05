@@ -82,6 +82,16 @@ public class HelloController {
         //Comprobar contra this.getNombre
         //Si no coincide repito (Posible while)
         //Si coincide reviso contraseña, y si también coincide
+        //LOS AMIGOS SON ESTÁTICOS, NO PUEDE SER
+        //TAN COMPLICADO PASARLE UNA LISTA DE NOMBRES AL SERVIDOR
+        //MIRAR SI MI HASMAP DE USUARIO CONTIENE ESE AMIGO
+        //Y QUE REVISE CADA VEZ QUE ALGUIEN SE CONECTA
+        //AL CONECTARSE ALGUIEN
+        //ITERO POR LA LISTA DE NOMBRES
+            //ITERO POR EL HASHMAP DE USUARIOS
+                //SI COINCIDE NOMBRE INTERCAMBIAN OBJETOS
+
+
         //Al hacer la conexión, modificar para que se pasen solo los amigos
         //Un arraylist, que mire los nombres en ambos clientes
         //O un hashmap con clave usuarios y contenido amigos

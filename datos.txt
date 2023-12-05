@@ -1,0 +1,3 @@
+usuario1 abc usuario2,usuario3
+usuario2 aaa usuario1
+usuario3 bbb usuario1
