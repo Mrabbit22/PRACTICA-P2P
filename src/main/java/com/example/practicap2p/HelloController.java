@@ -71,7 +71,23 @@ public class HelloController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //LO QUE PUEDO HACER AHORA ES LEER UN ARCHIVO ALGO ASÍ:
+        //USUARIO CONTRASEÑA AMIGO1,AMIGO2,AMIGO3.....
+        //LEO, SEPARO POR ESPACIOS, MIRO SI COINCIDE NOMBRE, SI NO REPITO, SI SI
+        //LE PASO EL NOMBRE A Object 195
+        //LE PASO LA LISTA DE AMIGOS AL SERVIDOR AL HACER LA CONEXIÓN -> PARTE DIFICIL
+
+        //Abrir archivo
+        //Separar por espacios
+        //Comprobar contra this.getNombre
+        //Si no coincide repito (Posible while)
+        //Si coincide reviso contraseña, y si también coincide
+        //Al hacer la conexión, modificar para que se pasen solo los amigos
+        //Un arraylist, que mire los nombres en ambos clientes
+        //O un hashmap con clave usuarios y contenido amigos
+
         Controlador.setNombre(this.getNombre());
+
         //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
         String registryURL = "rmi://localhost:6789/P2P";
         try {
