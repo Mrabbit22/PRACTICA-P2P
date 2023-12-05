@@ -84,7 +84,15 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
       return null;
   }
   public synchronized void unregisterForCallback(String Nombre)
-    throws RemoteException{clientList.remove(Nombre);}
+    throws RemoteException{
+       //Tengo que ir por la lista de cliente y quitarles al amigo del hasmap.
+      for(Map.Entry<String, CallbackClientInterface> token : clientList.entrySet()){
+          if(!token.getKey().equals(Nombre)) {
+              token.getValue().quitarAmigo(Nombre);
+          }
+      }
+      clientList.remove(Nombre);
+   }
 
 
     public synchronized void doCallbacks(String linea) throws RemoteException {

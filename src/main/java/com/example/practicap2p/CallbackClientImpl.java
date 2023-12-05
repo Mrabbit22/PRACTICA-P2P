@@ -22,6 +22,13 @@ public class CallbackClientImpl extends UnicastRemoteObject
       super();
       this.clientList = new HashMap<>();
    }
+   public void quitarAmigo(String User)throws RemoteException{
+      //Esto ademas tiene que chaparte la pestaña
+      //this.controlador.removeTab2(User);//Al parecer no le vale que se lo llame aquí
+      if(this.clientList.containsKey(User)){
+         this.clientList.remove(User);
+      }
+   }
    public HashMap<String, CallbackClientInterface> getLista(){
       return this.clientList;
    }

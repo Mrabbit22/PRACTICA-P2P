@@ -13,4 +13,5 @@ public interface CallbackClientInterface
     public void setNombre(String nombre) throws RemoteException;
     public void setControlador(Object195Controller controlador) throws RemoteException;
     public void sentText(String Nombre, String Texto)throws RemoteException;
+    public void quitarAmigo(String User)throws RemoteException;
 }

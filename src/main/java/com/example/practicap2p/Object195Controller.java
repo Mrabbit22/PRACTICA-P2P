@@ -129,6 +129,20 @@ public class Object195Controller {
     void removeTab(ActionEvent event) {
         this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
         if (this.TABPANE.getTabs().isEmpty()){
+            //El servidor se quita su cliente y el de los otros, pero del mio me ocupo yo
+            //PELELE, TIENES QUE INDICAR QUE TE HAS CERRADO DEL TODO
+            try {
+                this.servidor.unregisterForCallback(this.nombre);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+            System.exit(0);
+        }
+    }
+    void removeTab2(String tab) {//Si se desconecta el otro te chapa la conexión, pero desconexión del todo
+        this.TABPANE.getTabs().removeIf(token -> token.getText().equals(tab));
+        //this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
+        if (this.TABPANE.getTabs().isEmpty()){
             System.exit(0);
         }
     }
@@ -160,27 +174,31 @@ public class Object195Controller {
     @FXML
     void SendText(ActionEvent event) {
         Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
-        if (tabContent instanceof Parent) {
-            TextArea textArea = findTextArea((Parent) tabContent);
-            TextField textField = findTextField((Parent) tabContent);
-            if (textArea.getText() != null) {
-                textArea.setText(textArea.getText()+"\n"+ this.nombre + ": "+textField.getText());
-                //Itero por la lista de amigos -> Busco el del chat
-                //Uso su objeto cliente para enviar el mensaje
-                for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){
-                    //Como saco el nombre del tab en el que estoy
-                    if(token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText())){
-                        try {
-                            token.getValue().sentText(this.nombre,textField.getText());
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
+        if(this.cliente.getLista().containsKey(this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getText())){
+            if (tabContent instanceof Parent) {
+                TextArea textArea = findTextArea((Parent) tabContent);
+                TextField textField = findTextField((Parent) tabContent);
+                if (textArea.getText() != null) {
+                    textArea.setText(textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
+                    //Itero por la lista de amigos -> Busco el del chat
+                    //Uso su objeto cliente para enviar el mensaje
+                    for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()) {
+                        //Como saco el nombre del tab en el que estoy
+                        if (token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText())) {
+                            try {
+                                token.getValue().sentText(this.nombre, textField.getText());
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
+                    textField.clear();
+                } else {
+                    textArea.setText(textField.getText());
+                    textField.clear();
                 }
-                textField.clear();
             }else{
-                textArea.setText(textField.getText());
-                textField.clear();
+                //this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
             }
         }
     }
