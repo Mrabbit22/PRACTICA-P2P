@@ -92,6 +92,7 @@ public class HelloController {
             //O un hashmap con clave usuarios y contenido amigos
 
             Controlador.setNombre(this.getNombre());
+            Controlador.setAmigos(listaamigos);
 
             //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
             try {

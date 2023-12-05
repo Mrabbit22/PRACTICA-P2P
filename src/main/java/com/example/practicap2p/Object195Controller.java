@@ -50,6 +50,8 @@ public class Object195Controller {
     private TextArea FriendList;
     private String nombre;
 
+    private String[] amigos;
+
     //public void initialize(){
         /*
         FXMLLoader loader = new FXMLLoader();
@@ -63,10 +65,15 @@ public class Object195Controller {
             throw new RuntimeException(e);
         }*/
     //}
+    public void setAmigos(String[] amigos){
+        this.amigos = amigos;
+    }
     public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
         this.FriendList.clear();
-        for(Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){//Podrías castearlo aquí
-            this.FriendList.setText(this.FriendList.getText() + "\n" + " " + token.getKey() + " ");
+        //Para que salgan todos, si tal hago una lista de String, y que eso sean mis amigos totales
+        //Y que el hashmap sea los conectados, así que me los tienen que quitar al desconectarse
+        for(String token : this.amigos){//Podrías castearlo aquí
+            this.FriendList.setText(this.FriendList.getText() + "\n" + " " + token + " ");
         }
     }
     @FXML
@@ -78,10 +85,11 @@ public class Object195Controller {
         //De objetos
     }
     @FXML
-    void addTab(ActionEvent event) {
+    void addTab(ActionEvent event) {//Este si es solo para los conectados
+        //Así que para abrir la conexión tiene que mirar si está en el hashmap
         Tab aux = new Tab();
         VBox caja = new VBox();
-        if (this.FriendList.getText().contains(" " + this.FreindSelect.getText() + " ")){
+        if (this.cliente.getLista().containsKey(this.FreindSelect.getText())){
             aux.setText(FreindSelect.getText());
             //Creo la caja en la que haré el display del texto
             TextArea auxi = new TextArea();
