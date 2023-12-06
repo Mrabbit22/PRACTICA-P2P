@@ -2,19 +2,13 @@ package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Object195Controller {
@@ -51,6 +45,8 @@ public class Object195Controller {
     private String nombre;
 
     private String[] amigos;
+
+    private HashMap<String,String> chatLog = new HashMap<>();
 
     //public void initialize(){
         /*
@@ -97,6 +93,34 @@ public class Object195Controller {
             auxi.setLayoutY(14);
             auxi.setMaxHeight(310);
             auxi.setEditable(false);
+            //Necesito una función a traves del cliente, que me permita sacar la conversación
+            for(Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){
+                if(token.getKey().equals(this.FreindSelect.getText())){
+                    try {
+                        if(this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) == null){//El mio existe solo
+                            auxi.setText(this.chatLog.get(FreindSelect.getText()));
+                            break;
+                        } else if (!this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) != null) {//El suyo existe solo
+                            auxi.setText(token.getValue().getMyLog(this.nombre));
+                            break;
+                        } else if (!this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) == null) {
+                            break;
+                        } else{//Ambos existen (El más grande)
+                            //Si son iguales, o el mio es mayor
+                            if (this.chatLog.get(FreindSelect.getText()).toCharArray().length >= token.getValue().getMyLog(this.nombre).toCharArray().length){
+                                auxi.setText(this.chatLog.get(FreindSelect.getText()));
+                                break;
+                            }else{
+                                auxi.setText(this.cliente.getMyLog(this.nombre));
+                                break;
+                            }
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            System.out.println(auxi.getText());
             //auxi.setMaxWidth(256);
             aux.setContent(caja);
             //Creo un boton para cerrar la pestaña, que llame a MENOSTAB
@@ -118,6 +142,9 @@ public class Object195Controller {
     }
     public void setNombre(String nombre){
         this.nombre = nombre;
+    }
+    public HashMap<String, String> getLog(){
+        return this.chatLog;
     }
     public void setCliente(CallbackClientImpl cliente){
         this.cliente = cliente;
@@ -163,6 +190,7 @@ public class Object195Controller {
                 TextField textField = findTextField((Parent) tabContent);
                 if (textArea.getText() != null) {
                     textArea.setText(textArea.getText() + "\n" + User + ": " + Texto);
+                    chatLog.put(User,textArea.getText() + "\n" + User + ": " + Texto);
                     textField.clear();
                 } else {
                     textArea.setText(textField.getText());
@@ -180,6 +208,7 @@ public class Object195Controller {
                 TextField textField = findTextField((Parent) tabContent);
                 if (textArea.getText() != null) {
                     textArea.setText(textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
+                    chatLog.put(this.nombre,textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
                     //Itero por la lista de amigos -> Busco el del chat
                     //Uso su objeto cliente para enviar el mensaje
                     for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()) {

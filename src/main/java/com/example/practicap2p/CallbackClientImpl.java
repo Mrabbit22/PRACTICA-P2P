@@ -2,9 +2,7 @@ package com.example.practicap2p;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.AbstractMap;
 import java.util.HashMap;
-import java.util.Vector;
 
 /**
  * This class implements the remote interface 
@@ -28,6 +26,12 @@ public class CallbackClientImpl extends UnicastRemoteObject
       if(this.clientList.containsKey(User)){
          this.clientList.remove(User);
       }
+   }
+   public String getMyLog(String User)throws RemoteException{
+      if(this.controlador.getLog().containsKey(User)){
+         return this.controlador.getLog().get(User);
+      }
+      return null;
    }
    public HashMap<String, CallbackClientInterface> getLista(){
       return this.clientList;
