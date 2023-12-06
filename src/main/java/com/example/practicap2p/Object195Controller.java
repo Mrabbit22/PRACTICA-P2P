@@ -121,6 +121,12 @@ public class Object195Controller {
                 }
             }
             System.out.println(auxi.getText());
+            try {
+                System.out.println(this.cliente.getMyLog(this.nombre));
+                System.out.println(this.chatLog.get(FreindSelect.getText()));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
             //auxi.setMaxWidth(256);
             aux.setContent(caja);
             //Creo un boton para cerrar la pestaña, que llame a MENOSTAB
@@ -190,7 +196,8 @@ public class Object195Controller {
                 TextField textField = findTextField((Parent) tabContent);
                 if (textArea.getText() != null) {
                     textArea.setText(textArea.getText() + "\n" + User + ": " + Texto);
-                    chatLog.put(User,textArea.getText() + "\n" + User + ": " + Texto);
+                    chatLog.put(User,textArea.getText());
+                    //System.out.println("Este si es senttext"+textArea.getText() + "\nLinea nueva ----" + User + ": " + Texto);
                     textField.clear();
                 } else {
                     textArea.setText(textField.getText());
@@ -208,7 +215,8 @@ public class Object195Controller {
                 TextField textField = findTextField((Parent) tabContent);
                 if (textArea.getText() != null) {
                     textArea.setText(textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
-                    chatLog.put(this.nombre,textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
+                    chatLog.put(this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getText(),textArea.getText());
+                    //System.out.println("SendText: "+textArea.getText() + "\nLinea nueva ->" + this.nombre + ": " + textField.getText());
                     //Itero por la lista de amigos -> Busco el del chat
                     //Uso su objeto cliente para enviar el mensaje
                     for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()) {
