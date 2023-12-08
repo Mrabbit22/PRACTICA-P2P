@@ -15,6 +15,7 @@ import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Object195Controller {
@@ -50,6 +51,8 @@ public class Object195Controller {
     private TextArea FriendList;
     private String nombre;
 
+    private int id;
+
     //public void initialize(){
         /*
         FXMLLoader loader = new FXMLLoader();
@@ -63,10 +66,30 @@ public class Object195Controller {
             throw new RuntimeException(e);
         }*/
     //}
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public void setCliente(CallbackClientImpl cliente){
+        this.cliente = cliente;
+    }
+    public void setServidor(CallbackServerInterface servidor){
+        this.servidor = servidor;
+    }
+
     public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
         this.FriendList.clear();
-        for(Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){//Podrías castearlo aquí
-            this.FriendList.setText(this.FriendList.getText() + "\n" + " " + token.getKey() + " ");
+        ArrayList <String> listaAmigos;
+        try{
+            listaAmigos = servidor.obtenerAmigos(this.id);
+            for (String listaAmigo : listaAmigos) {
+                this.FriendList.setText(this.FriendList.getText() + "\n" + " " + listaAmigo + " ");
+            }
+        } catch(RemoteException e){
+            throw new RuntimeException(e);
         }
     }
     @FXML
@@ -76,6 +99,18 @@ public class Object195Controller {
         //Pero entre otras cosas tengo que actualizar el servidor
         //Lo único que debe hacer es cada vez que se conecte alguien, le envie la lista
         //De objetos
+        int idAmigo;
+        try {
+            String username = this.FriendTag.getText();
+            idAmigo = servidor.existeAmigo(id, username);
+            System.out.println("idAmigo: " + idAmigo);
+            if (idAmigo >= 0){
+                servidor.nuevoAmigo(this.id, idAmigo);
+                updateFriendLista();
+            }
+        }catch (RemoteException e){
+
+        }
     }
     @FXML
     void addTab(ActionEvent event) {
@@ -107,15 +142,6 @@ public class Object195Controller {
             caja.getChildren().add(Escritura);
             this.TABPANE.getTabs().add(aux);
         }
-    }
-    public void setNombre(String nombre){
-        this.nombre = nombre;
-    }
-    public void setCliente(CallbackClientImpl cliente){
-        this.cliente = cliente;
-    }
-    public void setServidor(CallbackServerInterface servidor){
-        this.servidor = servidor;
     }
     @FXML
     void removeTab(ActionEvent event) {

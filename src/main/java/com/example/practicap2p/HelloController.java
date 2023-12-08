@@ -47,46 +47,92 @@ public class HelloController {
 
     @FXML
     private Button Register;
-    @FXML
-    void onRegisterButtonClick(ActionEvent event) {
-        //Aquí metes los datos que te pasan en los fields en la base de datos
+
+    private String username;
+
+    private String password;
+
+    private boolean hayServidor = false;
+
+    private String registryURL = "rmi://localhost:6789/P2P";
+
+    private CallbackServerInterface h;
+
+    public HelloController() throws MalformedURLException, NotBoundException, RemoteException {
     }
-    public String getNombre(){return FieldUser.getText();}
+
+    private String getNombre(){return FieldUser.getText().trim();}
+
+    private String getPassword(){return FieldPassword.getText().trim();}
+    @FXML
+    void onRegisterButtonClick(ActionEvent event) throws java.rmi.RemoteException{
+        try{
+            //Aquí metes los datos que te pasan en los fields en la base de datos
+            username = this.getNombre();
+            password = this.getPassword();
+            if (!hayServidor){
+                this.hayServidor = true;
+                this.h = (CallbackServerInterface) Naming.lookup(this.registryURL);
+            }
+            if (username.isEmpty() || password.isEmpty()){
+                System.err.println("No se puede registrar a menos que introduzca un usuario y una contraseña");
+            } else if (password.isEmpty()){
+                System.err.println("No introdujo una contraseña");
+            } else if (username.isEmpty()){
+                System.err.println("Se ha olvidado de introducir el nombre del usuario");
+            } else {
+                h.registrarUsuario(username, password);
+            }
+        }catch (RemoteException | MalformedURLException | NotBoundException e){
+        }
+    }
     @FXML
     void onHelloButtonClick(ActionEvent event) {
         //HelloApplication HA = new HelloApplication();
+        username = this.getNombre();
+        password = this.getPassword();
+        int id;
         try {
-            //HA.changeScene("Object195.fxml");--> Esto ahora lo voy a hacer yo
-            this.stg = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene Escena = new Scene(root, 540, 440);
-            this.stg.setTitle("Chat de " + this.getNombre());
+            if (!hayServidor){
+                this.hayServidor = true;
+                this.h = (CallbackServerInterface) Naming.lookup(this.registryURL);
+            }
+            id = h.login(username,password);
+            if (id >= 0){
+                try {
+                    //HA.changeScene("Object195.fxml");--> Esto ahora lo voy a hacer yo
+                    this.stg = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Object195.fxml"));
+                    Parent root = fxmlLoader.load();
+                    Scene Escena = new Scene(root, 540, 440);
+                    this.stg.setTitle("Chat de " + this.getNombre());
 
-            this.stg.setScene(Escena);
-            this.stg.show();
-            //System.out.println(this.getNombre());
-            this.Controlador = fxmlLoader.getController();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (IOException e) {
+                    this.stg.setScene(Escena);
+                    this.stg.show();
+                    //System.out.println(this.getNombre());
+                    this.Controlador = fxmlLoader.getController();
+                    ((Node) (event.getSource())).getScene().getWindow().hide();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Controlador.setNombre(this.getNombre());
+                //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
+                try {
+                    CallbackClientInterface callbackObj = new CallbackClientImpl();
+                    callbackObj.setNombre(this.getNombre());
+                    callbackObj.setControlador(Controlador);
+                    h.registerForCallback(this.getNombre(),callbackObj);
+                    Controlador.setCliente((CallbackClientImpl) callbackObj);
+                    Controlador.setServidor(h);
+                    Controlador.setId(id);
+                    Controlador.updateFriendLista();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                //Sacar Object195Controller y enviarle el nombre
+            }
+        }catch (RemoteException | MalformedURLException | NotBoundException e){
             throw new RuntimeException(e);
         }
-        Controlador.setNombre(this.getNombre());
-        //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
-        String registryURL = "rmi://localhost:6789/P2P";
-        try {
-            CallbackClientInterface callbackObj = new CallbackClientImpl();
-            callbackObj.setNombre(this.getNombre());
-            CallbackServerInterface h = (CallbackServerInterface) Naming.lookup(registryURL);
-            callbackObj.setControlador(Controlador);
-            h.registerForCallback(this.getNombre(),callbackObj);
-            Controlador.setCliente((CallbackClientImpl) callbackObj);
-            Controlador.setServidor(h);
-            Controlador.updateFriendLista();
-        } catch (RemoteException | MalformedURLException | NotBoundException e) {
-            throw new RuntimeException(e);
-        }
-        //Sacar Object195Controller y enviarle el nombre
     }
-
 }

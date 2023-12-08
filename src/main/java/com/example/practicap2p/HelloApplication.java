@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
         //stg = stage;
         //stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        login = new Scene(fxmlLoader.load(), 320, 320);
+        login = new Scene(fxmlLoader.load(), 480 , 480); //Valores predeterminados 320 320
         stage.setTitle("LOGIN");
         stage.setScene(login);
         stage.show();

@@ -2,18 +2,44 @@ package com.example.practicap2p;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 
 public class CallbackServerImpl extends UnicastRemoteObject implements CallbackServerInterface {
 
    private HashMap<String,CallbackClientInterface> clientList;
 
+   private DAOConexion conexion;
 
    public CallbackServerImpl() throws RemoteException {
       super( );
      clientList = new HashMap<>();
+     this.conexion = new DAOConexion();
+   }
+
+   private DAOConexion getConexion (){
+       return this.conexion;
+   }
+
+   public void registrarUsuario (String username, String password) throws RemoteException {
+       this.getConexion().insertar_Usuario(username,password);
+   }
+
+   public int login (String username, String password) throws RemoteException {
+       return this.getConexion().login(username,password);
+   }
+
+   public int existeAmigo (int id, String username) throws RemoteException {
+       return this.getConexion().existeUsuario(id,username);
+   }
+
+   public void nuevoAmigo (int id, int amigo) throws RemoteException {
+       this.getConexion().insertarAmigo(id, amigo);
+   }
+
+   public ArrayList<String> obtenerAmigos (int id) throws RemoteException{
+        return this.getConexion().obtenerAmigos(id);
    }
 
   public String sayHello( )
@@ -34,7 +60,9 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
           }
          clientList.put(nombre,callbackClientObject);
       }
-  }  
+  }
+
+
 
   public synchronized void unregisterForCallback(String Nombre)
     throws RemoteException{clientList.remove(Nombre);}
