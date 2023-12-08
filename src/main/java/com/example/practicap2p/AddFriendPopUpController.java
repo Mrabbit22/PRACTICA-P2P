@@ -42,6 +42,8 @@ public class AddFriendPopUpController {
     void AceptarAmigo(ActionEvent event) {
         //Tienes al servidor para llamar a la función
         //AQUI LO QUE HARÍAS SERÍA ES DECIRLE AL SERVIDOR QUE OS HAGA AMIGOS A TI MISMO Y AL QUE TE PIDIÓ
+        Stage stage = (Stage) TEXTO.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
