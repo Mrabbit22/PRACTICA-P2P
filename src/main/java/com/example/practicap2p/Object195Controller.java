@@ -2,16 +2,23 @@ package com.example.practicap2p;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Object195Controller {
+    private Stage stg;
+    private AddFriendPopUpController Controlador;
+
     @FXML
     private TextField FreindSelect;
 
@@ -74,11 +81,31 @@ public class Object195Controller {
     }
     @FXML
     void addFriend(ActionEvent event) {
-        //this.FriendList.setText(this.FriendList.getText() + "\n" + " " + amigo + " ");
-        //Puedo tener una lista de amigos, y cada vez que meto uno actualizarla???
-        //Pero entre otras cosas tengo que actualizar el servidor
-        //Lo único que debe hacer es cada vez que se conecte alguien, le envie la lista
-        //De objetos
+        //AQUI LLAMAS A UNA FUNCIÓN EN EL SERVIDOR A LA QUE LE PASAS EL NOMBRE DE QUIEN BUSCAS Y DE QUIEN ERES
+        //Y EL SERVIDOR LO QUE HACE ES PRIMERO BUSCAR EN EL HASHMAP QUIEN TIENE ESE NOMBRE
+        //UNA VEZ LA HA ENCONTRADO (SI ESTÁ) LE LLAMA A LA FUNCIÓN FRIENDREQUEST
+    }
+    public void friendRequest(String Nombre){
+        //POR AHORA LO ÚNICO QUE HACE ES ABRIRTE LA PESTAÑA Y PASARLE LA REFERENCIA AL SERVIDOR Y LOS NOMBRES
+        //LO QUE VA A ABRIR AHORA ES AddFriendPopUpController
+        try {
+            this.stg = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AddFriendPopUp.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene Escena = new Scene(root, 540, 440);
+            this.stg.setTitle("Solicitud de amistad de "+ Nombre);
+
+            this.stg.setScene(Escena);
+            this.stg.show();
+            //System.out.println(this.getNombre());
+            this.Controlador = fxmlLoader.getController();
+            this.Controlador.setServidor(this.servidor);
+            this.Controlador.setNombreAmigo(Nombre);
+            this.Controlador.setNombreMio(this.nombre);
+            //((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     @FXML
     void addTab(ActionEvent event) {//Este si es solo para los conectados
