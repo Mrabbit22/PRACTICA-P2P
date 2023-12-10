@@ -59,6 +59,9 @@ public class Object195Controller {
 
     private int id;
 
+    @FXML
+    private Button BotonQuitar;
+
     private String[] amigos;
 
     private ArrayList <String> listaPendientes = new ArrayList<>();
@@ -103,6 +106,12 @@ public class Object195Controller {
         for (String nombre : listaPendientes){
             aux(nombre);
         }
+    }
+
+    @FXML
+    void QuitarAmigo(ActionEvent event) {
+        //Aquí haces lo que tengas que hacer
+        //El que quitas es this.FriendTag
     }
 
     public void quitarDeLista(String nombre){
