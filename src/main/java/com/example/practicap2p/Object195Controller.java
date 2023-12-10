@@ -68,6 +68,12 @@ public class Object195Controller {
 
     private HashMap<String,String> chatLog = new HashMap<>();
 
+    @FXML
+    private Button BotonCambiarContr;
+
+    @FXML
+    private TextField NuevaContr;
+
     //public void initialize(){
         /*
         FXMLLoader loader = new FXMLLoader();
@@ -100,6 +106,11 @@ public class Object195Controller {
 
     public void setAmigos(String[] amigos){
         this.amigos = amigos;
+    }
+
+    @FXML
+    void CambiarContrasena(ActionEvent event) {
+
     }
     @FXML
     void AcutalizarPendientes(ActionEvent event) {
