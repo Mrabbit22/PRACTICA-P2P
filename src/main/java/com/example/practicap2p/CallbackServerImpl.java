@@ -69,6 +69,10 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
         return amigos;
    }
 
+   public void cambiarContrasena (String nombre, String nuevaContrasena) throws RemoteException{
+       conexion.cambiarContraseña(nombre,nuevaContrasena);
+   }
+
    public ArrayList <String> obtenerAmigosOnline (int id, ArrayList <String> amigos) throws RemoteException{
        ArrayList <String> amigosConectados = new ArrayList<>();
        for (String key : clientList.keySet()){

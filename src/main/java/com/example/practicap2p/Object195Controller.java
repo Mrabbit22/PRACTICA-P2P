@@ -98,6 +98,11 @@ public class Object195Controller {
         this.servidor = servidor;
     }
 
+    @FXML
+    void CambiarContrasena(ActionEvent event) {
+
+    }
+
     public void setAmigos(String[] amigos){
         this.amigos = amigos;
     }

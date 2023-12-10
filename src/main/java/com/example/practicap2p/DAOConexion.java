@@ -277,4 +277,29 @@ public class DAOConexion {
         }
     }
 
+    public void cambiarContraseña (String nombre_usuario, String nuevaContraseña){
+        int error;
+        String SQL;
+
+        try {
+            if (conexion != null) {
+                SQL = "UPDATE usuarios SET contraseña = ? WHERE nombre_usuario = ?";
+                PreparedStatement ps = conexion.prepareStatement(SQL);
+
+                ps.setString(1, nuevaContraseña);
+                ps.setString(2,nombre_usuario);
+
+               error = ps.executeUpdate();
+               if(error > 0){
+                   System.out.println("Todo bien");
+               } else{
+                   System.out.println("Hubo un error");
+               }
+                ps.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+        }
+    }
+
 }
