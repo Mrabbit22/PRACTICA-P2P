@@ -276,23 +276,23 @@ public class Object195Controller {
         }
     }
 
-    public void sentText(String Texto, String User){//Mirar que lo añada al Tab al que pertenece
+    public void sentText(String Texto, String User) {//Mirar que lo añada al Tab al que pertenece
         //Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
         Node tabContent = null;
         Boolean exit = false;
-        for(Tab token : this.TABPANE.getTabs()){
-            if(token.getText().equals(User)){
+        for (Tab token : this.TABPANE.getTabs()) {
+            if (token.getText().equals(User)) {
                 tabContent = token.getContent();
                 exit = true;
             }
         }
-        if(exit){
+        if (exit) {
             if (tabContent instanceof Parent) {
                 TextArea textArea = findTextArea((Parent) tabContent);
                 TextField textField = findTextField((Parent) tabContent);
                 if (textArea.getText() != null) {
                     textArea.setText(textArea.getText() + "\n" + User + ": " + Texto);
-                    chatLog.put(User,textArea.getText());
+                    chatLog.put(User, textArea.getText());
                     //System.out.println("Este si es senttext"+textArea.getText() + "\nLinea nueva ----" + User + ": " + Texto);
                     textField.clear();
                 } else {
