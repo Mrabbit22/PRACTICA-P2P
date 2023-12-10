@@ -50,7 +50,12 @@ public class Object195Controller {
 
     @FXML
     private TextArea FriendList;
+
     private String nombre;
+
+
+    @FXML
+    private Button BotonPendientes;
 
     private int id;
 
