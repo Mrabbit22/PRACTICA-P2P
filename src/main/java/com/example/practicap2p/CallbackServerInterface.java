@@ -3,6 +3,7 @@ package com.example.practicap2p;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public interface CallbackServerInterface extends Remote {
@@ -17,18 +18,26 @@ public interface CallbackServerInterface extends Remote {
 //        to make its callbacks.
 
   public void registerForCallback(String Nombre,
-    CallbackClientInterface callbackClientObject
-    ) throws RemoteException;
+    CallbackClientInterface callbackClientObject) throws RemoteException;
 
   public void registrarUsuario(String username, String password) throws RemoteException;
 
   public int login (String username, String password) throws RemoteException;
 
-  public int existeAmigo (int id, String username) throws RemoteException;
+  public int existeUsuario(String username) throws RemoteException;
 
   public void nuevoAmigo (int id, int amigo) throws RemoteException;
+  public void amigoEnCliente (ArrayList <String> amigos) throws RemoteException;
 
-  public ArrayList <String> obtenerAmigos (int id) throws RemoteException;
+  public boolean isUsuarioConectado(String nombre) throws RemoteException;
+
+  public void añadirSolicitud (int yo, int amigo) throws RemoteException;
+
+  public void sendRequest (String yo, String nombreAmigo) throws RemoteException;
+
+  public HashMap<String,CallbackClientInterface> obtenerAmigos (int id) throws RemoteException;
+
+  public ArrayList <String> obtenerAmigosOnline (int id, ArrayList <String> amigos) throws RemoteException;
 
 // This remote method allows an object client to 
 // cancel its registration for callback

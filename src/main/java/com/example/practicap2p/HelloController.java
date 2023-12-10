@@ -87,7 +87,7 @@ public class HelloController {
         }
     }
     @FXML
-    void onHelloButtonClick(ActionEvent event) {
+    void onHelloButtonClick(ActionEvent event) throws RemoteException {
         //HelloApplication HA = new HelloApplication();
         username = this.getNombre();
         password = this.getPassword();
@@ -98,7 +98,7 @@ public class HelloController {
                 this.h = (CallbackServerInterface) Naming.lookup(this.registryURL);
             }
             id = h.login(username,password);
-            if (id >= 0){
+            if (id >= 0 && !h.isUsuarioConectado(username)){
                 try {
                     //HA.changeScene("Object195.fxml");--> Esto ahora lo voy a hacer yo
                     this.stg = new Stage();
@@ -118,13 +118,12 @@ public class HelloController {
                 Controlador.setNombre(this.getNombre());
                 //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
                 try {
-                    CallbackClientInterface callbackObj = new CallbackClientImpl();
-                    callbackObj.setNombre(this.getNombre());
-                    callbackObj.setControlador(Controlador);
-                    h.registerForCallback(this.getNombre(),callbackObj);
+                   CallbackClientInterface callbackObj = new CallbackClientImpl(getNombre(), h, id);
                     Controlador.setCliente((CallbackClientImpl) callbackObj);
                     Controlador.setServidor(h);
                     Controlador.setId(id);
+                    ((CallbackClientImpl) callbackObj).setControlador(this.Controlador);
+                    h.registerForCallback(this.getNombre(),callbackObj);
                     Controlador.updateFriendLista();
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
@@ -135,4 +134,5 @@ public class HelloController {
             throw new RuntimeException(e);
         }
     }
+
 }

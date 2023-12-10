@@ -74,9 +74,9 @@ public class DAOConexion {
             return loginExitoso;
         }
 
-        public int existeUsuario(int id, String nombre_usuario){
-            String SQL, ISQL;
-            int idAmigo = -1;
+        public int existeUsuario(String nombre_usuario){
+            String SQL;
+            int id = -1;
 
             try {
                 if (conexion != null) {
@@ -89,18 +89,18 @@ public class DAOConexion {
 
                     while (rs.next()) {
                         // Las credenciales son válidas
-                        idAmigo = rs.getInt("id");
+                        id = rs.getInt("id");
                     }
                     rs.close();
                     ps.close();
 
-                    return idAmigo;
+                    return id;
                 }
             } catch (SQLException e) {
                 System.err.println("Error al conectar con la base de datos: " + e.getMessage());
             }
 
-            return idAmigo;
+            return id;
         }
 
         public void insertarAmigo (int id, int idAmigo){
@@ -176,5 +176,31 @@ public class DAOConexion {
                 System.err.println("Error al conectar con la base de datos: " + e.getMessage());
             }
             return listaAmigos;
+        }
+
+        public void añadirSolicitud (int yo, int amigo){
+            String ISQL;
+            int error;
+            try {
+                if (conexion != null) {
+
+                    ISQL = "INSERT INTO solicitudes (solicitante,solicitado) VALUES (?,?)";
+
+                    PreparedStatement ps = conexion.prepareStatement(ISQL);
+
+                    ps.setInt(1,yo);
+                    ps.setInt(2,amigo);
+
+                    error = ps.executeUpdate();
+
+                    if (error > 0){
+                    } else{
+                        System.out.println("Hubo un error al insertar los datos");
+                    }
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+            }
         }
 }
