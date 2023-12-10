@@ -35,6 +35,8 @@ public interface CallbackServerInterface extends Remote {
 
   public void sendRequest (String yo, String nombreAmigo) throws RemoteException;
 
+  public void eliminarAmistad (int yo, int amigo, ArrayList <String> amigos) throws RemoteException;
+
   public HashMap<String,CallbackClientInterface> obtenerAmigos (int id) throws RemoteException;
 
   public ArrayList <String> obtenerAmigosOnline (int id, ArrayList <String> amigos) throws RemoteException;

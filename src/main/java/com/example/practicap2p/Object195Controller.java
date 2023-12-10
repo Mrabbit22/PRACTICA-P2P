@@ -112,6 +112,15 @@ public class Object195Controller {
     void QuitarAmigo(ActionEvent event) {
         //Aquí haces lo que tengas que hacer
         //El que quitas es this.FriendTag
+        try{
+            ArrayList <String> amigos = new ArrayList<>();
+            amigos.add(this.nombre);
+            amigos.add(this.FriendTag.getText());
+            int idAmigo = servidor.existeUsuario(this.FriendTag.getText());
+            servidor.eliminarAmistad(this.id,idAmigo, amigos);
+        }catch (RemoteException e){
+            System.err.println("Mensaje de error: " + e.getMessage());
+        }
     }
 
     public void quitarDeLista(String nombre){

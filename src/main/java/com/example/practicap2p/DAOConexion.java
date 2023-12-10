@@ -203,4 +203,78 @@ public class DAOConexion {
                 System.err.println("Error al conectar con la base de datos: " + e.getMessage());
             }
         }
+
+    public void eliminarSolicitud (int yo, int amigo){
+        String ISQL;
+        int error;
+        try {
+            if (conexion != null) {
+
+                ISQL = "DELETE INTO solicitudes (solicitante,solicitado) where solicitante = ? and solicitado = ?";
+
+                PreparedStatement ps = conexion.prepareStatement(ISQL);
+
+                ps.setInt(1,yo);
+                ps.setInt(2,amigo);
+
+                error = ps.executeUpdate();
+
+                if (error > 0){
+                } else{
+                    System.out.println("Hubo un error al insertar los datos");
+                }
+
+                ps.setInt(1,amigo);
+                ps.setInt(2,yo);
+
+                error = ps.executeUpdate();
+
+                if (error > 0){
+                } else{
+                    System.out.println("Hubo un error al insertar los datos");
+                }
+                ps.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+        }
+    }
+
+    public void eliminarAmistad (int yo, int amigo){
+        String ISQL;
+        int error;
+        try {
+            if (conexion != null) {
+
+                ISQL = "DELETE FROM amistad (amigo1,amigo2) WHERE amigo1 = ? and amigo2 = ?";
+
+                PreparedStatement ps = conexion.prepareStatement(ISQL);
+
+                ps.setInt(1,yo);
+                ps.setInt(2,amigo);
+
+                error = ps.executeUpdate();
+
+                if (error > 0){
+                } else{
+                    System.out.println("Hubo un error al insertar los datos");
+                }
+
+                ps.setInt(1,amigo);
+                ps.setInt(2,yo);
+
+                error = ps.executeUpdate();
+
+                if (error > 0){
+                } else{
+                    System.out.println("Hubo un error al insertar los datos");
+                }
+
+                ps.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+        }
+    }
+
 }

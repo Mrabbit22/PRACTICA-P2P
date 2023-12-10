@@ -79,6 +79,16 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        return amigosConectados;
    }
 
+    public void eliminarAmistad (int yo, int amigo, ArrayList <String> amigos) throws RemoteException{
+       conexion.eliminarAmistad(yo,amigo);
+        CallbackClientInterface amigo1 = this.clientList.get(amigos.get(0));
+        CallbackClientInterface amigo2 = this.clientList.get(amigos.get(1));
+        amigo1.deleteFriend(amigos.get(1));
+        amigo1.updateFriendList();
+        amigo2.deleteFriend(amigos.get(0));
+        amigo2.updateFriendList();
+    }
+
     public void amigoEnCliente (ArrayList <String> amigos) throws RemoteException{
        CallbackClientInterface amigo1 = this.clientList.get(amigos.get(0));
        CallbackClientInterface amigo2 = this.clientList.get(amigos.get(1));

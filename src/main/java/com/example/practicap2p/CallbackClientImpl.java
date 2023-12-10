@@ -94,6 +94,10 @@ public class CallbackClientImpl extends UnicastRemoteObject
       servidor.amigoEnCliente(amigos);
    }
 
+   public void deleteFriend (String nombreAmigo) throws RemoteException{
+      this.clientList.remove(nombreAmigo);
+   }
+
    public void addNewFriend(String nombreAmigo, CallbackClientInterface refereciaAmigo) throws RemoteException{
       this.clientList.put(nombreAmigo,refereciaAmigo);
    }
