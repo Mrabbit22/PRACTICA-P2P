@@ -24,6 +24,8 @@
                         <Button fx:id="AddFriend" layoutX="317.0" layoutY="238.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="26.0" prefWidth="50.0" text="ADD" />
                         <Button fx:id="BotonPendientes" layoutX="443.0" layoutY="14.0" mnemonicParsing="false" onAction="#AcutalizarPendientes" text="Pendientes" />
                          <Button fx:id="BotonQuitar" layoutX="316.0" layoutY="264.0" mnemonicParsing="false" onAction="#QuitarAmigo" text="REMOVE" />
+                         <TextField fx:id="NuevaContr" layoutX="63.0" layoutY="213.0" promptText="Contraseña" />
+                         <Button fx:id="BotonCambiarContr" layoutX="112.0" layoutY="251.0" mnemonicParsing="false" onAction="#CambiarContrasena" text="Cambiar" />
                      </children></AnchorPane>
               </content>
             </Tab>
