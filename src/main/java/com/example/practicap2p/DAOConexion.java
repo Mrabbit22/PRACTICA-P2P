@@ -210,7 +210,7 @@ public class DAOConexion {
         try {
             if (conexion != null) {
 
-                ISQL = "DELETE INTO solicitudes (solicitante,solicitado) where solicitante = ? and solicitado = ?";
+                ISQL = "DELETE INTO solicitudes (solicitante,solicitado) where (solicitante = ? and solicitado = ?)";
 
                 PreparedStatement ps = conexion.prepareStatement(ISQL);
 
@@ -246,7 +246,7 @@ public class DAOConexion {
         try {
             if (conexion != null) {
 
-                ISQL = "DELETE FROM amistad (amigo1,amigo2) WHERE amigo1 = ? and amigo2 = ?";
+                ISQL = "DELETE FROM amistad (amigo1,amigo2) WHERE (amigo1 = ? and amigo2 = ?)";
 
                 PreparedStatement ps = conexion.prepareStatement(ISQL);
 

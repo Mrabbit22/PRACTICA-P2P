@@ -23,6 +23,7 @@
                         <TextField fx:id="FriendTag" layoutX="368.0" layoutY="238.0" promptText="Friend's Name" />
                         <Button fx:id="AddFriend" layoutX="317.0" layoutY="238.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="26.0" prefWidth="50.0" text="ADD" />
                         <Button fx:id="BotonPendientes" layoutX="443.0" layoutY="14.0" mnemonicParsing="false" onAction="#AcutalizarPendientes" text="Pendientes" />
+                         <Button fx:id="BotonQuitar" layoutX="316.0" layoutY="264.0" mnemonicParsing="false" onAction="#QuitarAmigo" text="REMOVE" />
                      </children></AnchorPane>
               </content>
             </Tab>
