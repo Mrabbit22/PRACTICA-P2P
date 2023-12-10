@@ -34,6 +34,8 @@ public class AddFriendPopUpController {
     private CallbackServerInterface servidor;
 
     private CallbackClientInterface cliente;
+
+    private Object195Controller controler;
     public void setServidor(CallbackServerInterface servidor){
         this.servidor = servidor;
     }
@@ -51,6 +53,10 @@ public class AddFriendPopUpController {
     public void setCliente (CallbackClientInterface yo){
         this.cliente = yo;
     }
+
+    public void setControler ( Object195Controller controler){
+        this.controler = controler;
+    }
     @FXML
     void AceptarAmigo(ActionEvent event) {
         //Tienes al servidor para llamar a la función
@@ -64,6 +70,9 @@ public class AddFriendPopUpController {
                 amigos.add(NombreAmigo);
                 cliente.ServeraddNewFriend(amigos);
             }
+            System.out.println(nombreMio);
+            System.out.println(NombreAmigo);
+            controler.quitarDeLista(nombreMio);
             Stage stage = (Stage) TEXTO.getScene().getWindow();
             stage.close();
         } catch (RemoteException e){
@@ -75,6 +84,7 @@ public class AddFriendPopUpController {
     @FXML
     void RechazarAmigo(ActionEvent event) {
         //Esto sería cerrarlo a lo bruto
+        controler.quitarDeLista(NombreAmigo);
         Stage stage = (Stage) TEXTO.getScene().getWindow();
         stage.close();
     }

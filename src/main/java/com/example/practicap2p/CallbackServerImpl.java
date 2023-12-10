@@ -83,9 +83,9 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        CallbackClientInterface amigo1 = this.clientList.get(amigos.get(0));
        CallbackClientInterface amigo2 = this.clientList.get(amigos.get(1));
        amigo1.addNewFriend(amigos.get(1),amigo2);
-       amigo1.getControlador().updateFriendLista();
+       amigo1.updateFriendList();
        amigo2.addNewFriend(amigos.get(0),amigo1);
-       amigo2.getControlador().updateFriendLista();
+       amigo2.updateFriendList();
     }
 
    public void añadirSolicitud (int yo, int amigo) throws RemoteException{

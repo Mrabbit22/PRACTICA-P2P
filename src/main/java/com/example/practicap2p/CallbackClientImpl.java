@@ -86,6 +86,10 @@ public class CallbackClientImpl extends UnicastRemoteObject
       this.controlador.friendRequest(nombreAmigo);
    }
 
+   public void updateFriendList () throws RemoteException{
+      this.controlador.updateFriendLista();
+   }
+
    public void ServeraddNewFriend(ArrayList <String> amigos) throws RemoteException{
       servidor.amigoEnCliente(amigos);
    }

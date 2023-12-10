@@ -20,6 +20,7 @@ public interface CallbackClientInterface
     public Object195Controller getControlador () throws RemoteException;
     public void friendRequest(String nombreAmigo) throws RemoteException, RuntimeException;
     public void ServeraddNewFriend(ArrayList<String> amigos) throws RemoteException;
+    public void updateFriendList () throws RemoteException;
     public void addNewFriend(String nombreAmigo, CallbackClientInterface refereciaAmigo) throws RemoteException;
     public void setFriends () throws RemoteException;
     public void quitarAmigo(String User)throws RemoteException;

@@ -61,6 +61,8 @@ public class Object195Controller {
 
     private String[] amigos;
 
+    private ArrayList <String> listaPendientes = new ArrayList<>();
+
     private HashMap<String,String> chatLog = new HashMap<>();
 
     //public void initialize(){
@@ -98,7 +100,13 @@ public class Object195Controller {
     }
     @FXML
     void AcutalizarPendientes(ActionEvent event) {
+        for (String nombre : listaPendientes){
+            aux(nombre);
+        }
+    }
 
+    public void quitarDeLista(String nombre){
+        listaPendientes.remove(nombre);
     }
     public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
         this.FriendList.clear();
@@ -141,6 +149,10 @@ public class Object195Controller {
     public void friendRequest(String Nombre){
         //POR AHORA LO ÚNICO QUE HACE ES ABRIRTE LA PESTAÑA Y PASARLE LA REFERENCIA AL SERVIDOR Y LOS NOMBRES
         //LO QUE VA A ABRIR AHORA ES AddFriendPopUpController
+        listaPendientes.add(Nombre);
+    }
+
+    public void aux (String Nombre){
         try {
             this.stg = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("AddFriendPopUp.fxml"));
@@ -157,6 +169,7 @@ public class Object195Controller {
             this.Controlador.setIdMio(this.id);
             this.Controlador.setCliente(this.cliente);
             this.Controlador.setNombreMio(this.nombre);
+            this.Controlador.setControler(this);
             //((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
             throw new RuntimeException(e);
