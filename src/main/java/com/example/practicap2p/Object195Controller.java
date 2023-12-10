@@ -68,6 +68,12 @@ public class Object195Controller {
 
     private HashMap<String,String> chatLog = new HashMap<>();
 
+    @FXML
+    private Button BotonCambiarContr;
+
+    @FXML
+    private TextField NuevaContr;
+
     //public void initialize(){
         /*
         FXMLLoader loader = new FXMLLoader();
@@ -100,7 +106,11 @@ public class Object195Controller {
 
     @FXML
     void CambiarContrasena(ActionEvent event) {
-
+        try{
+            servidor.cambiarContrasena(this.nombre, this.NuevaContr.getText());
+        }catch (RemoteException e){
+            System.err.println("Mensaje de error: " + e.getMessage());
+        }
     }
 
     public void setAmigos(String[] amigos){
