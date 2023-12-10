@@ -96,6 +96,10 @@ public class Object195Controller {
     public void setAmigos(String[] amigos){
         this.amigos = amigos;
     }
+    @FXML
+    void AcutalizarPendientes(ActionEvent event) {
+
+    }
     public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
         this.FriendList.clear();
         try{
