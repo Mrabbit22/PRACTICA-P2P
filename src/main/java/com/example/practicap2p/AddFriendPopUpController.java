@@ -53,6 +53,9 @@ public class AddFriendPopUpController {
     public void setCliente (CallbackClientInterface yo){
         this.cliente = yo;
     }
+    public void setFRIENDLABEL(String texto){
+        this.FRIENDLABEL.setText(texto);
+    }
 
     public void setControler ( Object195Controller controler){
         this.controler = controler;
