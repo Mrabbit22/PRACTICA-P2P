@@ -19,8 +19,10 @@ public interface CallbackClientInterface
     public int getId () throws RemoteException;
     public Object195Controller getControlador () throws RemoteException;
     public void friendRequest(String nombreAmigo) throws RemoteException, RuntimeException;
+    public ArrayList <String> getListaPendientes () throws RemoteException;
     public void ServeraddNewFriend(ArrayList<String> amigos) throws RemoteException;
     public void updateFriendList () throws RemoteException;
+    public void getAmigos () throws RemoteException;
     public void deleteFriend (String nombreAmigo) throws RemoteException;
     public void addNewFriend(String nombreAmigo, CallbackClientInterface refereciaAmigo) throws RemoteException;
     public void setFriends () throws RemoteException;

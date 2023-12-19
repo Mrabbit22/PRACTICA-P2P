@@ -31,9 +31,17 @@ public interface CallbackServerInterface extends Remote {
 
   public boolean isUsuarioConectado(String nombre) throws RemoteException;
 
-  public void añadirSolicitud (int yo, int amigo) throws RemoteException;
+  public void anadirSolicitud(int yo, int amigo) throws RemoteException;
 
   public void sendRequest (String yo, String nombreAmigo) throws RemoteException;
+
+  public boolean existeAmistad (int yo, int amigo) throws RemoteException;
+
+  public void eliminarSolicitud (int yo, int amigo) throws RemoteException;
+
+  public boolean existeSolicitud (int yo, int amigo) throws RemoteException;
+
+  public ArrayList <String> obtenerSolicitudes (int yo) throws RemoteException;
 
   public void eliminarAmistad (int yo, int amigo, ArrayList <String> amigos) throws RemoteException;
 
@@ -46,7 +54,6 @@ public interface CallbackServerInterface extends Remote {
 // This remote method allows an object client to 
 // cancel its registration for callback
 
-  public void unregisterForCallback(
-    String Nombre)
+  public void unregisterForCallback(String Nombre, int id)
     throws RemoteException;
 }

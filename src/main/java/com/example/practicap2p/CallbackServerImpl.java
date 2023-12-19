@@ -1,15 +1,10 @@
 package com.example.practicap2p;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class CallbackServerImpl extends UnicastRemoteObject implements CallbackServerInterface {
 
@@ -44,16 +39,28 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
    }
 
    public boolean isUsuarioConectado(String nombre) throws RemoteException{
-       boolean isUsuarioConectado = false;
-       if(clientList.containsKey(nombre)){
-           isUsuarioConectado = true;
-       }
-       return isUsuarioConectado;
+       return clientList.containsKey(nombre);
    }
 
    public void sendRequest (String yo, String nombreAmigo) throws RemoteException{
        CallbackClientInterface user = this.clientList.get(nombreAmigo);
        user.friendRequest(yo);
+   }
+
+   public ArrayList <String> obtenerSolicitudes (int yo) throws RemoteException{
+       return this.conexion.obtenerSolicitudes(yo);
+   }
+
+   public boolean existeAmistad (int yo, int amigo) throws RemoteException{
+       return conexion.existeAmistad(yo, amigo);
+   }
+
+   public void eliminarSolicitud (int yo, int amigo) throws RemoteException{
+        conexion.eliminarSolicitud(yo, amigo);
+   }
+
+   public boolean existeSolicitud (int yo, int amigo) throws RemoteException{
+       return conexion.existeSolicitud(yo,amigo);
    }
 
    public HashMap <String,CallbackClientInterface> obtenerAmigos (int id) throws RemoteException{
@@ -70,7 +77,7 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
    }
 
    public void cambiarContrasena (String nombre, String nuevaContrasena) throws RemoteException{
-       conexion.cambiarContraseña(nombre,nuevaContrasena);
+       conexion.cambiarContrasena(nombre,nuevaContrasena);
    }
 
    public ArrayList <String> obtenerAmigosOnline (int id, ArrayList <String> amigos) throws RemoteException{
@@ -87,23 +94,31 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        conexion.eliminarAmistad(yo,amigo);
         CallbackClientInterface amigo1 = this.clientList.get(amigos.get(0));
         CallbackClientInterface amigo2 = this.clientList.get(amigos.get(1));
-        amigo1.deleteFriend(amigos.get(1));
-        amigo1.updateFriendList();
-        amigo2.deleteFriend(amigos.get(0));
-        amigo2.updateFriendList();
+        if (amigo1 != null){
+            amigo1.deleteFriend(amigos.get(1));
+            amigo1.updateFriendList();
+        }
+        if (amigo2 != null){
+            amigo2.deleteFriend(amigos.get(0));
+            amigo2.updateFriendList();
+        }
     }
 
     public void amigoEnCliente (ArrayList <String> amigos) throws RemoteException{
        CallbackClientInterface amigo1 = this.clientList.get(amigos.get(0));
        CallbackClientInterface amigo2 = this.clientList.get(amigos.get(1));
-       amigo1.addNewFriend(amigos.get(1),amigo2);
-       amigo1.updateFriendList();
-       amigo2.addNewFriend(amigos.get(0),amigo1);
-       amigo2.updateFriendList();
+       if (amigo1 != null){
+           amigo1.addNewFriend(amigos.get(1),amigo2);
+           amigo1.updateFriendList();
+       }
+       if(amigo2 != null){
+           amigo2.addNewFriend(amigos.get(0),amigo1);
+           amigo2.updateFriendList();
+       }
     }
 
-   public void añadirSolicitud (int yo, int amigo) throws RemoteException{
-       conexion.añadirSolicitud(yo,amigo);
+   public void anadirSolicitud(int yo, int amigo) throws RemoteException{
+       conexion.anadirSolicitud(yo,amigo);
    }
 
   public String sayHello( )
@@ -113,7 +128,6 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
 
   public synchronized void registerForCallback(String nombre, CallbackClientInterface callbackClientObject)
     throws RemoteException{
-       CallbackClientInterface aux;
 
       if (!(clientList.containsKey(nombre))) {
           /*for(String amigo : lista) {//Por cada uno de mis amigos, lo tengo que buscar
@@ -127,17 +141,34 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
                   }
               }
           }*/
-         clientList.put(nombre,callbackClientObject);
+          clientList.put(nombre, callbackClientObject);
+          for (String cliente : clientList.keySet()) {
+              CallbackClientInterface client = clientList.get(cliente);
+              client.updateFriendList();
+          }
       }
   }
 
-  public synchronized void unregisterForCallback(String Nombre)
+  public synchronized void unregisterForCallback(String Nombre, int id)
     throws RemoteException{
+       ArrayList <String> listaPendientes;
+       int idAmigo;
        //Tengo que ir por la lista de cliente y quitarles al amigo del hasmap.
       for(Map.Entry<String, CallbackClientInterface> token : clientList.entrySet()){
           if(!token.getKey().equals(Nombre)) {
-              token.getValue().quitarAmigo(Nombre);
+              token.getValue().deleteFriend(Nombre);
           }
+      }
+      listaPendientes = (ArrayList<String>) clientList.get(Nombre).getListaPendientes();
+      for (String nombre : listaPendientes){
+          idAmigo = conexion.existeUsuario(nombre);
+          if (idAmigo >= 0){
+              conexion.anadirSolicitud(idAmigo, id);
+          }
+      }
+      for (String cliente : clientList.keySet()) {
+          CallbackClientInterface client = clientList.get(cliente);
+          client.updateFriendList();
       }
       clientList.remove(Nombre);
    }

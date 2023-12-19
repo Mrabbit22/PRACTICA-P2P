@@ -104,6 +104,10 @@ public class Object195Controller {
         this.servidor = servidor;
     }
 
+    public ArrayList <String> getListaPendientes (){
+        return this.listaPendientes;
+    }
+
     @FXML
     void CambiarContrasena(ActionEvent event) {
         try{
@@ -164,14 +168,12 @@ public class Object195Controller {
             String username = this.FriendTag.getText();
             if (!username.equals(this.nombre)){
                 idAmigo = servidor.existeUsuario(username);
-                if (idAmigo >= 0){
+                if ( !servidor.existeSolicitud(this.id, idAmigo) && idAmigo >= 0 && !servidor.existeAmistad(this.id,idAmigo)){
                     if (servidor.isUsuarioConectado(username)){
                         servidor.sendRequest(this.nombre,username);
                     }else{
-                        servidor.añadirSolicitud(cliente.getId(), idAmigo);
+                        servidor.anadirSolicitud(cliente.getId(), idAmigo);
                     }
-                    //servidor.nuevoAmigo(this.id, idAmigo);
-                    //updateFriendLista();
                 }
             }
         }catch (RemoteException e){
@@ -285,7 +287,7 @@ public class Object195Controller {
             //El servidor se quita su cliente y el de los otros, pero del mio me ocupo yo
             //PELELE, TIENES QUE INDICAR QUE TE HAS CERRADO DEL TODO
             try {
-                this.servidor.unregisterForCallback(this.nombre);
+                this.servidor.unregisterForCallback(this.nombre, this.id);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

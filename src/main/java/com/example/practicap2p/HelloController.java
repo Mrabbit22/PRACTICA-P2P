@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 //C:\Users\ldiaz\OneDrive\Escritorio\UNI AÑO 3\CODIS\PRACTICA-CALLBACK
@@ -118,13 +119,21 @@ public class HelloController {
                 Controlador.setNombre(this.getNombre());
                 //AHORA HACEMOS LA CONEXIÓN DEL CLIENTE
                 try {
+                    ArrayList <String> solicitudes = new ArrayList<>();
                    CallbackClientInterface callbackObj = new CallbackClientImpl(getNombre(), h, id);
+                   callbackObj.setFriends();
+                   callbackObj.getAmigos();
                     Controlador.setCliente((CallbackClientImpl) callbackObj);
                     Controlador.setServidor(h);
                     Controlador.setId(id);
+                    solicitudes = (ArrayList<String>) h.obtenerSolicitudes(id);
+                    if (!solicitudes.isEmpty()){
+                        for (String solicitud : solicitudes){
+                            Controlador.friendRequest(solicitud);
+                        }
+                    }
                     ((CallbackClientImpl) callbackObj).setControlador(this.Controlador);
                     h.registerForCallback(this.getNombre(),callbackObj);
-                    Controlador.updateFriendLista();
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }

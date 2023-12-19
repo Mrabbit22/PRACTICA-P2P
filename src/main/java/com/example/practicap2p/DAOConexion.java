@@ -178,7 +178,7 @@ public class DAOConexion {
             return listaAmigos;
         }
 
-        public void añadirSolicitud (int yo, int amigo){
+        public void anadirSolicitud(int yo, int amigo){
             String ISQL;
             int error;
             try {
@@ -204,13 +204,41 @@ public class DAOConexion {
             }
         }
 
-    public void eliminarSolicitud (int yo, int amigo){
+        public boolean existeAmistad (int yo, int amigo){
+            String SQL;
+            boolean id = false;
+
+            try {
+                if (conexion != null) {
+                    SQL = "SELECT * FROM amistad WHERE amigo1 = ? and amigo2 = ?";
+                    PreparedStatement ps = conexion.prepareStatement(SQL);
+
+                    ps.setInt(1, yo);
+                    ps.setInt(2,amigo);
+
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        // Las credenciales son válidas
+                        id = true;
+                    }
+                    rs.close();
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+            }
+
+            return id;
+        }
+
+        public void eliminarSolicitud (int yo, int amigo){
         String ISQL;
         int error;
         try {
             if (conexion != null) {
 
-                ISQL = "DELETE INTO solicitudes (solicitante,solicitado) where (solicitante = ? and solicitado = ?)";
+                ISQL = "DELETE FROM solicitudes where (solicitante = ? and solicitado = ?)";
 
                 PreparedStatement ps = conexion.prepareStatement(ISQL);
 
@@ -224,20 +252,81 @@ public class DAOConexion {
                     System.out.println("Hubo un error al insertar los datos");
                 }
 
-                ps.setInt(1,amigo);
-                ps.setInt(2,yo);
-
-                error = ps.executeUpdate();
-
-                if (error > 0){
-                } else{
-                    System.out.println("Hubo un error al insertar los datos");
-                }
                 ps.close();
             }
         } catch (SQLException e) {
             System.err.println("Error al conectar con la base de datos: " + e.getMessage());
         }
+    }
+
+    public boolean existeSolicitud (int yo, int amigo){
+        String SQL;
+        boolean id = false;
+
+        try {
+            if (conexion != null) {
+                SQL = "SELECT * FROM solicitudes WHERE solicitante = ? and solicitado = ?";
+                PreparedStatement ps = conexion.prepareStatement(SQL);
+
+                ps.setInt(1, yo);
+                ps.setInt(2,amigo);
+
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    // Las credenciales son válidas
+                    id = true;
+                }
+                rs.close();
+                ps.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+        }
+
+        return id;
+    }
+
+    public ArrayList <String> obtenerSolicitudes (int yo){
+        ArrayList<String> listaAmigos = new ArrayList<>();
+        int id;
+        String SQL, ISQL;
+
+        SQL = "SELECT * FROM solicitudes WHERE solicitado = ?";
+
+
+        try{
+            PreparedStatement ps = conexion.prepareStatement(SQL);
+
+            ps.setInt(1, yo);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Las credenciales son válidas
+                id = rs.getInt("solicitante");
+                ISQL = "SELECT * FROM usuarios WHERE id = ?";
+                PreparedStatement ps2 = conexion.prepareStatement(ISQL);
+                ps2.setInt(1, id);
+                ResultSet rs2 = ps2.executeQuery();
+                while(rs2.next()){
+                    listaAmigos.add(rs2.getString("nombre_usuario"));
+                }
+                ps2.close();
+                rs2.close();
+            }
+            ps.close();
+            rs.close();
+
+        } catch (SQLException e){
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+        }
+        return listaAmigos;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public void eliminarAmistad (int yo, int amigo){
@@ -246,7 +335,7 @@ public class DAOConexion {
         try {
             if (conexion != null) {
 
-                ISQL = "DELETE FROM amistad (amigo1,amigo2) WHERE (amigo1 = ? and amigo2 = ?)";
+                ISQL = "DELETE FROM amistad WHERE (amigo1 = ? AND amigo2 = ?)";
 
                 PreparedStatement ps = conexion.prepareStatement(ISQL);
 
@@ -277,7 +366,7 @@ public class DAOConexion {
         }
     }
 
-    public void cambiarContraseña (String nombre_usuario, String nuevaContraseña){
+    public void cambiarContrasena(String nombre_usuario, String nuevaContraseña){
         int error;
         String SQL;
 

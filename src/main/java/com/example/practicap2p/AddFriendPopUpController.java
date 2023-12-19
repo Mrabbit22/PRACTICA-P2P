@@ -64,15 +64,16 @@ public class AddFriendPopUpController {
         try{
             int idAmigo = servidor.existeUsuario(this.NombreAmigo);
             if(idAmigo >= 0){
+                if (servidor.existeSolicitud(this.idMio, idAmigo)){
+                    servidor.eliminarSolicitud(this.idMio, idAmigo);
+                }
                 servidor.nuevoAmigo(this.idMio,idAmigo);
                 ArrayList <String> amigos = new ArrayList<>();
                 amigos.add(nombreMio);
                 amigos.add(NombreAmigo);
                 cliente.ServeraddNewFriend(amigos);
             }
-            System.out.println(nombreMio);
-            System.out.println(NombreAmigo);
-            controler.quitarDeLista(nombreMio);
+            controler.quitarDeLista(NombreAmigo);
             Stage stage = (Stage) TEXTO.getScene().getWindow();
             stage.close();
         } catch (RemoteException e){
@@ -84,9 +85,20 @@ public class AddFriendPopUpController {
     @FXML
     void RechazarAmigo(ActionEvent event) {
         //Esto sería cerrarlo a lo bruto
-        controler.quitarDeLista(NombreAmigo);
-        Stage stage = (Stage) TEXTO.getScene().getWindow();
-        stage.close();
+        try {
+            int idAmigo = servidor.existeUsuario(this.NombreAmigo);
+            if (idAmigo >= 0){
+                if (servidor.existeSolicitud(this.idMio, idAmigo)){
+                    servidor.eliminarSolicitud(this.idMio, idAmigo);
+                }
+                controler.quitarDeLista(NombreAmigo);
+                Stage stage = (Stage) TEXTO.getScene().getWindow();
+                stage.close();
+            }
+        }catch (RemoteException e){
+            System.err.println("Mensaje de error: " + e.getMessage());
+        }
+
     }
 
 }

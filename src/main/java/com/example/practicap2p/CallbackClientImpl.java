@@ -54,6 +54,13 @@ public class CallbackClientImpl extends UnicastRemoteObject
       }
       return null;
    }
+
+   public void getAmigos () throws RemoteException{
+      System.out.println(clientList.size());
+      for (String amigo : clientList.keySet()){
+         System.out.println("Nombre del amigo: " + amigo);
+      }
+   }
    public HashMap<String, CallbackClientInterface> getLista(){
       return this.clientList;
    }
@@ -88,6 +95,10 @@ public class CallbackClientImpl extends UnicastRemoteObject
 
    public void updateFriendList () throws RemoteException{
       this.controlador.updateFriendLista();
+   }
+
+   public ArrayList <String> getListaPendientes () throws RemoteException{
+      return controlador.getListaPendientes();
    }
 
    public void ServeraddNewFriend(ArrayList <String> amigos) throws RemoteException{
