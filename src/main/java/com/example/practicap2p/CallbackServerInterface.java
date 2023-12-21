@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 
 public interface CallbackServerInterface extends Remote {
@@ -21,6 +22,8 @@ public interface CallbackServerInterface extends Remote {
     CallbackClientInterface callbackClientObject) throws RemoteException;
 
   public void registrarUsuario(String username, String password) throws RemoteException;
+
+  public boolean comprobarUsuario (String nombre,UUID token) throws RemoteException;
 
   public int login (String username, String password) throws RemoteException;
 

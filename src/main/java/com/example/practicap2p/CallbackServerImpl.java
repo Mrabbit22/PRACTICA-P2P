@@ -5,10 +5,13 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CallbackServerImpl extends UnicastRemoteObject implements CallbackServerInterface {
 
    private HashMap<String,CallbackClientInterface> clientList;
+
+   private HashMap<UUID,String> listaTokens;
 
    private final DAOConexion conexion;
 
@@ -117,6 +120,16 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        }
     }
 
+    public boolean comprobarUsuario (String nombre,UUID token) throws RemoteException{
+       boolean toret = false;
+       if(listaTokens.containsKey(token)){
+           if (nombre.equals(listaTokens.get(token))){
+                toret = true;
+           }
+       }
+       return toret;
+    }
+
    public void anadirSolicitud(int yo, int amigo) throws RemoteException{
        conexion.anadirSolicitud(yo,amigo);
    }
@@ -141,6 +154,9 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
                   }
               }
           }*/
+          UUID token = UUID.randomUUID();
+          callbackClientObject.setToken(token);
+          listaTokens.put(token,nombre);
           clientList.put(nombre, callbackClientObject);
           for (String cliente : clientList.keySet()) {
               CallbackClientInterface client = clientList.get(cliente);

@@ -126,6 +126,7 @@ public class HelloController {
                     Controlador.setCliente((CallbackClientImpl) callbackObj);
                     Controlador.setServidor(h);
                     Controlador.setId(id);
+                    Controlador.setPassword(password);
                     solicitudes = (ArrayList<String>) h.obtenerSolicitudes(id);
                     if (!solicitudes.isEmpty()){
                         for (String solicitud : solicitudes){

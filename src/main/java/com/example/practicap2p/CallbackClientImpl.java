@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * This class implements the remote interface 
@@ -29,6 +30,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
 
    private Stage stg;
    private AddFriendPopUpController Controlador;
+   private UUID token;
 
    public CallbackClientImpl(String nombre, CallbackServerInterface servidor, int id) throws RemoteException {
       super();
@@ -55,6 +57,16 @@ public class CallbackClientImpl extends UnicastRemoteObject
       return null;
    }
 
+   public boolean comprobarUsuario () throws RemoteException{
+      boolean toret = false;
+      try {
+         toret = servidor.comprobarUsuario(nombre,token);
+      } catch (RemoteException e) {
+         System.err.println("Existe un error al conectar con el servidor; " + e.getMessage());
+      }
+      return toret;
+   }
+
    public void getAmigos () throws RemoteException{
       System.out.println(clientList.size());
       for (String amigo : clientList.keySet()){
@@ -76,6 +88,10 @@ public class CallbackClientImpl extends UnicastRemoteObject
       String returnMessage = "Recibido: " + message;
       System.out.println(returnMessage);
       return returnMessage;
+   }
+
+   public void setToken (UUID token) throws RemoteException{
+      this.token = token;
    }
 
    public void recibirObjeto(String Nombre, CallbackClientInterface objeto)throws RemoteException{

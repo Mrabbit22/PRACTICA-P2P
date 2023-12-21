@@ -5,32 +5,38 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="373.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practicap2p.Object195Controller">
-   <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <TabPane fx:id="TABPANE" layoutY="26.0" prefHeight="351.0" prefWidth="538.0" tabClosingPolicy="UNAVAILABLE">
-         <tabs>
-            <Tab fx:id="FriendManager" text="Friends">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="194.0">
-                     <children>
-                        <Button fx:id="MASTAB" layoutX="12.0" layoutY="56.0" mnemonicParsing="false" onAction="#addTab" text="+" />
-                        <TextField fx:id="FreindSelect" layoutX="37.0" layoutY="56.0" promptText="Start Conversation" />
-                        <TextArea fx:id="FriendList" editable="false" layoutX="317.0" layoutY="38.0" prefHeight="200.0" prefWidth="200.0" />
-                        <TextField fx:id="FriendTag" layoutX="368.0" layoutY="238.0" promptText="Friend's Name" />
-                        <Button fx:id="AddFriend" layoutX="317.0" layoutY="238.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="26.0" prefWidth="50.0" text="ADD" />
-                        <Button fx:id="BotonPendientes" layoutX="443.0" layoutY="14.0" mnemonicParsing="false" onAction="#AcutalizarPendientes" text="Pendientes" />
-                         <Button fx:id="BotonQuitar" layoutX="316.0" layoutY="264.0" mnemonicParsing="false" onAction="#QuitarAmigo" text="REMOVE" />
-                         <TextField fx:id="NuevaContr" layoutX="63.0" layoutY="213.0" promptText="Contraseña" />
-                         <Button fx:id="BotonCambiarContr" layoutX="112.0" layoutY="251.0" mnemonicParsing="false" onAction="#CambiarContrasena" text="Cambiar" />
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-         </tabs>
-      </TabPane>
-      <Button fx:id="MENOSTAB" layoutX="503.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeTab" prefHeight="26.0" prefWidth="34.0" text="x" />
-   </children>
+    <children>
+        <ImageView fitHeight="378.0" fitWidth="538.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../../../../../../Downloads/Nebulosa.jpg" />
+            </image>
+        </ImageView>
+        <TabPane fx:id="TABPANE" layoutY="26.0" prefHeight="351.0" prefWidth="538.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab fx:id="FriendManager" text="Friends">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="194.0">
+                            <children>
+                                <Button fx:id="MASTAB" layoutX="12.0" layoutY="56.0" mnemonicParsing="false" onAction="#addTab" text="+" />
+                                <TextField fx:id="FreindSelect" layoutX="37.0" layoutY="56.0" promptText="Start Conversation" />
+                                <TextArea fx:id="FriendList" editable="false" layoutX="317.0" layoutY="38.0" prefHeight="200.0" prefWidth="200.0" />
+                                <TextField fx:id="FriendTag" layoutX="317.0" layoutY="264.0" prefHeight="26.0" prefWidth="200.0" promptText="Friend's Name" />
+                                <Button fx:id="AddFriend" layoutX="317.0" layoutY="238.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="26.0" prefWidth="93.0" text="ADD" />
+                                <Button fx:id="BotonPendientes" layoutX="443.0" layoutY="14.0" mnemonicParsing="false" onAction="#AcutalizarPendientes" text="Pendientes" />
+                                <Button fx:id="BotonQuitar" layoutX="410.0" layoutY="238.0" mnemonicParsing="false" onAction="#QuitarAmigo" prefHeight="26.0" prefWidth="106.0" text="REMOVE" />
+                                <TextField fx:id="NuevaContr" layoutX="12.0" layoutY="290.0" promptText="Contraseña" />
+                                <Button fx:id="BotonCambiarContr" layoutX="156.0" layoutY="290.0" mnemonicParsing="false" onAction="#CambiarContrasena" prefHeight="17.0" prefWidth="61.0" text="Cambiar" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <Button fx:id="MENOSTAB" layoutX="503.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeTab" prefHeight="26.0" prefWidth="34.0" text="x" />
+    </children>
 </AnchorPane>

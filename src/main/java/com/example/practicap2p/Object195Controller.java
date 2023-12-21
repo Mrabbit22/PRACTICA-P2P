@@ -20,6 +20,8 @@ public class Object195Controller {
     private Stage stg;
     private AddFriendPopUpController Controlador;
 
+    private solicitarPasswordController Controlador2;
+
     @FXML
     private TextField FreindSelect;
 
@@ -74,6 +76,8 @@ public class Object195Controller {
     @FXML
     private TextField NuevaContr;
 
+    private String password;
+
     //public void initialize(){
         /*
         FXMLLoader loader = new FXMLLoader();
@@ -104,16 +108,33 @@ public class Object195Controller {
         this.servidor = servidor;
     }
 
+    public void setPassword (String password) {this.password = password;}
+
     public ArrayList <String> getListaPendientes (){
         return this.listaPendientes;
     }
 
     @FXML
     void CambiarContrasena(ActionEvent event) {
-        try{
-            servidor.cambiarContrasena(this.nombre, this.NuevaContr.getText());
-        }catch (RemoteException e){
-            System.err.println("Mensaje de error: " + e.getMessage());
+        try {
+            this.stg = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("SolicitarPassword.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene Escena = new Scene(root, 600, 400);
+            this.stg.setTitle("Solicitud de la contraseña antigüa ");
+
+            this.stg.setScene(Escena);
+            this.stg.show();
+            this.Controlador2 = fxmlLoader.getController();
+            this.Controlador2.setServidor(this.servidor);
+            this.Controlador2.setNombre(this.nombre);
+            this.Controlador2.setControlador(this);
+            this.Controlador2.setNuevaContr(NuevaContr.getText());
+            this.Controlador2.setCliente(cliente);
+            NuevaContr.clear();
+            //((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -132,11 +153,13 @@ public class Object195Controller {
         //Aquí haces lo que tengas que hacer
         //El que quitas es this.FriendTag
         try{
-            ArrayList <String> amigos = new ArrayList<>();
-            amigos.add(this.nombre);
-            amigos.add(this.FriendTag.getText());
-            int idAmigo = servidor.existeUsuario(this.FriendTag.getText());
-            servidor.eliminarAmistad(this.id,idAmigo, amigos);
+            if (cliente.comprobarUsuario()){
+                ArrayList <String> amigos = new ArrayList<>();
+                amigos.add(this.nombre);
+                amigos.add(this.FriendTag.getText());
+                int idAmigo = servidor.existeUsuario(this.FriendTag.getText());
+                servidor.eliminarAmistad(this.id,idAmigo, amigos);
+            }
         }catch (RemoteException e){
             System.err.println("Mensaje de error: " + e.getMessage());
         }
@@ -145,7 +168,7 @@ public class Object195Controller {
     public void quitarDeLista(String nombre){
         listaPendientes.remove(nombre);
     }
-    public void updateFriendLista(){//Claro, ahora esto usa un hashmap -> Hay que remodelar
+    public void updateFriendLista(){
         this.FriendList.clear();
         try{
             ArrayList <String> listaAmigosConectados = cliente.getOnlineFriends();
@@ -166,7 +189,7 @@ public class Object195Controller {
         int idAmigo;
         try {
             String username = this.FriendTag.getText();
-            if (!username.equals(this.nombre)){
+            if (!username.equals(this.nombre) && cliente.comprobarUsuario()){
                 idAmigo = servidor.existeUsuario(username);
                 if ( !servidor.existeSolicitud(this.id, idAmigo) && idAmigo >= 0 && !servidor.existeAmistad(this.id,idAmigo)){
                     if (servidor.isUsuarioConectado(username)){
@@ -331,34 +354,38 @@ public class Object195Controller {
     @FXML
     void SendText(ActionEvent event) {
         Node tabContent = this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getContent();
-        if(this.cliente.getLista().containsKey(this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getText())){
-            if (tabContent instanceof Parent) {
-                TextArea textArea = findTextArea((Parent) tabContent);
-                TextField textField = findTextField((Parent) tabContent);
-                if (textArea.getText() != null) {
-                    textArea.setText(textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
-                    chatLog.put(this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getText(),textArea.getText());
-                    //System.out.println("SendText: "+textArea.getText() + "\nLinea nueva ->" + this.nombre + ": " + textField.getText());
-                    //Itero por la lista de amigos -> Busco el del chat
-                    //Uso su objeto cliente para enviar el mensaje
-                    for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()) {
-                        //Como saco el nombre del tab en el que estoy
-                        if (token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText())) {
-                            try {
-                                token.getValue().sentText(this.nombre, textField.getText());
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
+        try {
+            if (this.cliente.getLista().containsKey(this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getText()) && this.cliente.comprobarUsuario()) {
+                if (tabContent instanceof Parent) {
+                    TextArea textArea = findTextArea((Parent) tabContent);
+                    TextField textField = findTextField((Parent) tabContent);
+                    if (textArea.getText() != null) {
+                        textArea.setText(textArea.getText() + "\n" + this.nombre + ": " + textField.getText());
+                        chatLog.put(this.TABPANE.getTabs().get(this.TABPANE.getSelectionModel().getSelectedIndex()).getText(), textArea.getText());
+                        //System.out.println("SendText: "+textArea.getText() + "\nLinea nueva ->" + this.nombre + ": " + textField.getText());
+                        //Itero por la lista de amigos -> Busco el del chat
+                        //Uso su objeto cliente para enviar el mensaje
+                        for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()) {
+                            //Como saco el nombre del tab en el que estoy
+                            if (token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText())) {
+                                try {
+                                    token.getValue().sentText(this.nombre, textField.getText());
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
+                        textField.clear();
+                    } else {
+                        textArea.setText(textField.getText());
+                        textField.clear();
                     }
-                    textField.clear();
                 } else {
-                    textArea.setText(textField.getText());
-                    textField.clear();
+                    //this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
                 }
-            }else{
-                //this.TABPANE.getTabs().remove(this.TABPANE.getSelectionModel().getSelectedIndex());
             }
+        }catch (RemoteException e){
+            System.err.println("Hubo un error al conectarse con el servidor: " + e.getMessage());
         }
     }
     private TextArea findTextArea(Parent parent) {

@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 
 public interface CallbackClientInterface
@@ -16,7 +17,9 @@ public interface CallbackClientInterface
     public void setControlador(Object195Controller controlador) throws RemoteException;
     public void sentText(String Nombre, String Texto)throws RemoteException;
     public HashMap<String, CallbackClientInterface> getFriends()throws RemoteException;
+    public void setToken (UUID token) throws RemoteException;
     public int getId () throws RemoteException;
+    public boolean comprobarUsuario () throws RemoteException;
     public Object195Controller getControlador () throws RemoteException;
     public void friendRequest(String nombreAmigo) throws RemoteException, RuntimeException;
     public ArrayList <String> getListaPendientes () throws RemoteException;
