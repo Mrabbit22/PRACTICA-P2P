@@ -145,7 +145,9 @@ public class Object195Controller {
     void AcutalizarPendientes(ActionEvent event) {
         for (String nombre : listaPendientes){
             aux(nombre);
+            System.out.println(nombre);
         }
+        System.out.println(listaPendientes.size());
     }
 
     @FXML
