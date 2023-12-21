@@ -228,6 +228,7 @@ public class Object195Controller {
             this.Controlador.setCliente(this.cliente);
             this.Controlador.setNombreMio(this.nombre);
             this.Controlador.setControler(this);
+            this.Controlador.settear();
             //((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
             throw new RuntimeException(e);
