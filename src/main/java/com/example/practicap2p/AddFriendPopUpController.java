@@ -57,6 +57,9 @@ public class AddFriendPopUpController {
     public void setControler ( Object195Controller controler){
         this.controler = controler;
     }
+    public void initialize(){
+        FRIENDLABEL.setText(this.NombreAmigo);
+    }
     @FXML
     void AceptarAmigo(ActionEvent event) {
         //Tienes al servidor para llamar a la función
