@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../../../Downloads/COSA.jpg" />
+            <Image url="@Downloads/COSA.jpg" />
          </image>
       </ImageView>
       <Text fx:id="TEXTO" fill="#00f000" fontSmoothingType="LCD" layoutX="110.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friend Request" textAlignment="CENTER" wrappingWidth="380.53680419921875">
