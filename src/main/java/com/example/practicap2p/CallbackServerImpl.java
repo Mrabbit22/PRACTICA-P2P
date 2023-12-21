@@ -18,6 +18,7 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
    public CallbackServerImpl() throws RemoteException {
       super( );
      clientList = new HashMap<>();
+     listaTokens = new HashMap<>();
      this.conexion = new DAOConexion();
    }
 
