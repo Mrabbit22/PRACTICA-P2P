@@ -57,7 +57,7 @@ public class AddFriendPopUpController {
     public void setControler ( Object195Controller controler){
         this.controler = controler;
     }
-    public void initialize(){
+    public void settear(){
         FRIENDLABEL.setText(this.NombreAmigo);
     }
     @FXML
