@@ -252,12 +252,12 @@ public class Object195Controller {
             auxi.setEditable(false);
             //Necesito una función a traves del cliente, que me permita sacar la conversación
             for(Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()){
-                if(token.getKey().equals(this.FreindSelect.getText())){
+                if(token.getKey().equals(this.FreindSelect.getText()) && token.getValue() != null){
                     try {
                         if(this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) == null){//El mio existe solo
                             auxi.setText(this.chatLog.get(FreindSelect.getText()));
                             break;
-                        } else if (!this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) != null) {//El suyo existe solo
+                        } else if (!this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) != null && this.cliente.getOnlineFriends().contains(token.getKey())) {//El suyo existe solo
                             auxi.setText(token.getValue().getMyLog(this.nombre));
                             break;
                         } else if (!this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) == null) {
@@ -268,7 +268,7 @@ public class Object195Controller {
                                 auxi.setText(this.chatLog.get(FreindSelect.getText()));
                                 break;
                             }else{
-                                auxi.setText(this.cliente.getMyLog(this.nombre));
+                               auxi.setText(this.cliente.getMyLog(this.nombre));
                                 break;
                             }
                         }
@@ -370,7 +370,7 @@ public class Object195Controller {
                         //Uso su objeto cliente para enviar el mensaje
                         for (Map.Entry<String, CallbackClientInterface> token : this.cliente.getLista().entrySet()) {
                             //Como saco el nombre del tab en el que estoy
-                            if (token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText())) {
+                            if (token.getKey().equals(this.TABPANE.getSelectionModel().getSelectedItem().getText()) && token.getValue() != null) {
                                 try {
                                     token.getValue().sentText(this.nombre, textField.getText());
                                 } catch (RemoteException e) {
