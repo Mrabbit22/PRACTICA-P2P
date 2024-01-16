@@ -135,11 +135,6 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        conexion.anadirSolicitud(yo,amigo);
    }
 
-  public String sayHello( )
-    throws RemoteException {
-      return("hello");
-  }
-
   public synchronized void registerForCallback(String nombre, CallbackClientInterface callbackClientObject)
     throws RemoteException{
 
