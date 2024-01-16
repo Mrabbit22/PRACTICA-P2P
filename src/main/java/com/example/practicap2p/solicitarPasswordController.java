@@ -32,6 +32,7 @@ public class solicitarPasswordController {
     private Object195Controller controlador;
     private CallbackClientInterface cliente;
 
+
     public void setServidor (CallbackServerInterface servidor){
         this.servidor = servidor;
     }
@@ -41,7 +42,6 @@ public class solicitarPasswordController {
     public void setControlador (Object195Controller controlador){
         this.controlador = controlador;
     }
-
     public void setNuevaContr (String NuevaContr){
         this.NuevaContr = NuevaContr;
     }
@@ -55,16 +55,18 @@ public class solicitarPasswordController {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
             if (cliente.comprobarUsuario()) {
-                try{
-                    servidor.cambiarContrasena(this.nombre, this.NuevaContr);
-                }catch (RemoteException e){
-                    System.err.println("Mensaje de error: " + e.getMessage());
+                if (servidor.login(nombre,contrasena) >= 0){
+                    try{
+                        servidor.cambiarContrasena(this.nombre, this.NuevaContr);
+                    }catch (RemoteException e){
+                        System.err.println("Mensaje de error: " + e.getMessage());
+                    }
+                    Stage stage = (Stage) contrasenaMala.getScene().getWindow();
+                    stage.close();
+                } else {
+                    contrasenaMala.setText("Lo contraseña introducida es erronea. Vuelva a introducirla");
+                    espacioContrasena.clear();
                 }
-                Stage stage = (Stage) contrasenaMala.getScene().getWindow();
-                stage.close();
-            } else {
-                 contrasenaMala.setText("Lo contraseña introducida es erronea. Vuelva a introducirla");
-                 espacioContrasena.clear();
             }
         } catch (RemoteException e){
             System.err.println("Ha habido un error al llamar al seridor: " + e.getMessage());

@@ -33,7 +33,9 @@ public class DAOConexion {
                     error = ps.executeUpdate();
 
                     if (error > 0){
-                        System.out.println("Se insertaron los datos exitosamente");
+                        int id = login(nombre_usuario,contrasena);
+                        insertarAmigo(id,9);
+
                     } else{
                         System.out.println("Hubo un error al insertar los datos");
                     }
@@ -62,7 +64,6 @@ public class DAOConexion {
                     while (rs.next()) {
                         // Las credenciales son válidas
                         loginExitoso = rs.getInt("id");
-                        System.out.println("Inicio de sesión exitoso");
                     }
                     rs.close();
                     ps.close();

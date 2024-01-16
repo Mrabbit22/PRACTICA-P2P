@@ -117,20 +117,22 @@ public class Object195Controller {
     @FXML
     void CambiarContrasena(ActionEvent event) {
         try {
-            this.stg = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("SolicitarPassword.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene Escena = new Scene(root, 600, 400);
-            this.stg.setTitle("Solicitud de la contraseña antigüa ");
+            if (!password.equals(NuevaContr.getText())){
+                this.stg = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("SolicitarPassword.fxml"));
+                Parent root = fxmlLoader.load();
+                Scene Escena = new Scene(root, 600, 400);
+                this.stg.setTitle("Solicitud de la contraseña antigüa ");
 
-            this.stg.setScene(Escena);
-            this.stg.show();
-            this.Controlador2 = fxmlLoader.getController();
-            this.Controlador2.setServidor(this.servidor);
-            this.Controlador2.setNombre(this.nombre);
-            this.Controlador2.setControlador(this);
-            this.Controlador2.setNuevaContr(NuevaContr.getText());
-            this.Controlador2.setCliente(cliente);
+                this.stg.setScene(Escena);
+                this.stg.show();
+                this.Controlador2 = fxmlLoader.getController();
+                this.Controlador2.setServidor(this.servidor);
+                this.Controlador2.setNombre(this.nombre);
+                this.Controlador2.setControlador(this);
+                this.Controlador2.setNuevaContr(NuevaContr.getText());
+                this.Controlador2.setCliente(cliente);
+            }
             NuevaContr.clear();
             //((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
@@ -261,6 +263,7 @@ public class Object195Controller {
                             auxi.setText(token.getValue().getMyLog(this.nombre));
                             break;
                         } else if (!this.chatLog.containsKey(FreindSelect.getText()) && token.getValue().getMyLog(this.nombre) == null) {
+                            auxi.setText("NUEVA CONVERSACION");
                             break;
                         } else{//Ambos existen (El más grande)
                             //Si son iguales, o el mio es mayor

@@ -122,7 +122,6 @@ public class HelloController {
                     ArrayList <String> solicitudes = new ArrayList<>();
                    CallbackClientInterface callbackObj = new CallbackClientImpl(getNombre(), h, id);
                    callbackObj.setFriends();
-                   callbackObj.getAmigos();
                     Controlador.setCliente((CallbackClientImpl) callbackObj);
                     Controlador.setServidor(h);
                     Controlador.setId(id);

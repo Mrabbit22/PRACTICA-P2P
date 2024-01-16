@@ -46,7 +46,7 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        return clientList.containsKey(nombre);
    }
 
-   public void sendRequest (String yo, String nombreAmigo) throws RemoteException{
+   public void sendRequest (String yo, String nombreAmigo) throws RemoteException {
        CallbackClientInterface user = this.clientList.get(nombreAmigo);
        user.friendRequest(yo);
    }
@@ -171,11 +171,11 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
        ArrayList <String> listaPendientes;
        int idAmigo;
        //Tengo que ir por la lista de cliente y quitarles al amigo del hasmap.
-      for(Map.Entry<String, CallbackClientInterface> token : clientList.entrySet()){
+      /*for(Map.Entry<String, CallbackClientInterface> token : clientList.entrySet()){
           if(!token.getKey().equals(Nombre)) {
               token.getValue().deleteFriend(Nombre);
           }
-      }
+      }*/
       listaPendientes = (ArrayList<String>) clientList.get(Nombre).getListaPendientes();
       for (String nombre : listaPendientes){
           idAmigo = conexion.existeUsuario(nombre);
@@ -183,11 +183,11 @@ public class CallbackServerImpl extends UnicastRemoteObject implements CallbackS
               conexion.anadirSolicitud(idAmigo, id);
           }
       }
+      clientList.remove(Nombre);
       for (String cliente : clientList.keySet()) {
           CallbackClientInterface client = clientList.get(cliente);
           client.updateFriendList();
       }
-      clientList.remove(Nombre);
    }
 
 
