@@ -9,15 +9,6 @@ import java.util.UUID;
 
 public interface CallbackServerInterface extends Remote {
 
-  public String sayHello( )   
-    throws RemoteException;
-
-// This remote method allows an object client to 
-// register for callback
-// @param callbackClientObject is a reference to the
-//        object of the client; to be used by the server
-//        to make its callbacks.
-
   public void registerForCallback(String Nombre,
     CallbackClientInterface callbackClientObject) throws RemoteException;
 
@@ -54,8 +45,6 @@ public interface CallbackServerInterface extends Remote {
 
   public ArrayList <String> obtenerAmigosOnline (int id, ArrayList <String> amigos) throws RemoteException;
 
-// This remote method allows an object client to 
-// cancel its registration for callback
 
   public void unregisterForCallback(String Nombre, int id)
     throws RemoteException;

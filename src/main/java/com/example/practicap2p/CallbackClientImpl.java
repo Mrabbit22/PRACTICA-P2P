@@ -1,11 +1,7 @@
 package com.example.practicap2p;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -76,30 +72,9 @@ public class CallbackClientImpl extends UnicastRemoteObject
    public HashMap<String, CallbackClientInterface> getLista(){
       return this.clientList;
    }
-   /*public void setControlador(Object195Controller controlador)throws RemoteException{
-      this.controlador = controlador;
-   }
-   public void setNombre(String nombre)throws RemoteException{
-      this.nombre = nombre;
-   }*/
-
-   public String notifyMe(String message){//Algo así pero que llame a la de escribir mensaje
-      //Entonces he de modificar la de escribir mensajes para que mire el usuario
-      String returnMessage = "Recibido: " + message;
-      System.out.println(returnMessage);
-      return returnMessage;
-   }
 
    public void setToken (UUID token) throws RemoteException{
       this.token = token;
-   }
-
-   public void recibirObjeto(String Nombre, CallbackClientInterface objeto)throws RemoteException{
-      clientList.put(Nombre,objeto);
-   }
-   public void recibirObjetoUPD(String Nombre, CallbackClientInterface objeto)throws RemoteException{
-      clientList.put(Nombre,objeto);
-      this.controlador.updateFriendLista();
    }
    public void sentText(String Nombre, String Texto)throws RemoteException{
       this.controlador.sentText(Texto,Nombre);
@@ -131,10 +106,6 @@ public class CallbackClientImpl extends UnicastRemoteObject
 
    public int getId () throws RemoteException {
       return this.id;
-   }
-
-   public Object195Controller getControlador () throws RemoteException{
-      return this.controlador;
    }
    public HashMap<String, CallbackClientInterface> getFriends() throws RemoteException{
       return this.clientList;

@@ -127,7 +127,7 @@ public class HelloController {
                     Controlador.setServidor(h);
                     Controlador.setId(id);
                     Controlador.setPassword(password);
-                    solicitudes = (ArrayList<String>) h.obtenerSolicitudes(id);
+                    solicitudes = h.obtenerSolicitudes(id);
                     if (!solicitudes.isEmpty()){
                         for (String solicitud : solicitudes){
                             Controlador.friendRequest(solicitud);
